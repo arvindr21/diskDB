@@ -1,0 +1,33 @@
+{
+  "name": "diskdb",
+  "version": "0.0.0",
+  "main": "lib/diskdb.js",
+  "description": "A disk-based json database for node",
+  "homepage": "http://arvindr21.github.io/diskDB",
+  "bugs": "https://github.com/arvindr21/diskdb/issues",
+  "author": {
+    "name": "Arvind Ravulavaru",
+    "email": "arvind.ravulavaru@gmail.com",
+    "url": "http://thejackalofjavascript.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arvindr21/diskdb"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [],
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "load-grunt-tasks": "^0.4.0",
+    "time-grunt": "^0.3.1",
+    "jshint-stylish": "^0.2.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  }
+}
