@@ -63,6 +63,13 @@ db.connect('/examples/db')
 //or
 db.connect('/examples/db', ['articles']);
 ```
+#### Load Multiple Collections
+
+```js
+var db = require('diskdb');
+db.connect('/examples/db', ['articles','comments','users']);
+```
+
 
 ### Write/Save to Collection
 ```js
