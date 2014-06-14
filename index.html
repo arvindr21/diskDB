@@ -17,7 +17,7 @@
     <div class="wrapper">
       <header>
         <h1 class="header">diskDB</h1>
-        <p class="header">A Light Weight Disk based JSON Database with a MongoDB like API.</p>
+        <p class="header">A Lightweight Disk based JSON Database with a MongoDB like API.</p>
 
         <ul>
           <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/zipball/master">Download ZIP</a></li>
@@ -107,6 +107,13 @@
   <span class="p">.</span><span class="nx">loadCollections</span><span class="p">([</span><span class="s1">'articles'</span><span class="p">]);</span>
 <span class="c1">//or</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+</pre></div>
+
+<h4>
+<a name="load-multiple-collections" class="anchor" href="#load-multiple-collections"><span class="octicon octicon-link"></span></a>Load Multiple Collections</h4>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">,</span><span class="s1">'comments'</span><span class="p">,</span><span class="s1">'users'</span><span class="p">]);</span>
 </pre></div>
 
 <h3>
