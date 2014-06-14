@@ -20,6 +20,8 @@
         <p class="header">A Light Weight Disk based JSON Database with a MongoDB like API.</p>
 
         <ul>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/tarball/master">Download TAR</a></li>
           <li><a class="buttons github" href="https://github.com/arvindr21/diskDB">View On GitHub</a></li>
         </ul>
 
@@ -34,11 +36,30 @@
 
 <p><a href="https://nodei.co/npm/diskdb/"><img src="https://nodei.co/npm/diskdb.png?downloads=true&amp;stars=true" alt="NPM"></a></p>
 
-<p>A Light Weight Disk based JSON Database with a MongoDB like API.</p>
+<p>A Lightweight Disk based JSON Database with a MongoDB like API.</p>
 
-<p><em>You will never know that you are interacting with a File System <img class="emoji" title=":grin:" alt=":grin:" src="https://assets-cdn.github.com/images/icons/emoji/grin.png" height="20" width="20" align="absmiddle"></em></p>
+<p><em>You will never know that you are interacting with a File System</em></p>
 
 <h2>
+<a name="contents" class="anchor" href="#contents"><span class="octicon octicon-link"></span></a>Contents</h2>
+
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li>
+<a href="#documentation">Documentation</a>
+
+<ul>
+<li><a href="#connect-to-db">Connect</a></li>
+<li><a href="#load-collections">Load Collections</a></li>
+<li><a href="#writesave-to-collection">Write/Save</a></li>
+<li><a href="#read-from-collection">Read</a></li>
+<li><a href="#update-collection">Update</a></li>
+<li><a href="#remove-collection">Remove</a></li>
+<li><a href="#count">Count</a></li>
+</ul>
+</li>
+<li><a href="#examples">Examples</a></li>
+</ul><h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
 <p>Install the module with: <code>npm install diskdb</code></p>
@@ -57,7 +78,7 @@
 <div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">pathToFolder</span><span class="p">,</span> <span class="p">[</span><span class="s1">'filename'</span><span class="p">]);</span>
 </pre></div>
 
-<p>Filename will be the name of the JSON file. You can omit the extenstuin, diskDB will take care of it for you.</p>
+<p>Filename will be the name of the JSON file. You can omit the extenstion, diskDB will take care of it for you.</p>
 
 <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
 <span class="nx">db</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
