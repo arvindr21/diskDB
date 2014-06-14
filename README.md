@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/diskdb.png?downloads=true&stars=true)](https://nodei.co/npm/diskdb/)
 
-A Lightweight Disk based JSON Database with a MongoDBextenstion like API.
+A Lightweight Disk based JSON Database with a MongoDB like API.
 
 _You will never know that you are interacting with a File System_
 
