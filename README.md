@@ -1,4 +1,4 @@
-# diskDB [![Build Status](https://secure.travis-ci.org/arvindr21/diskdb.png?branch=master)](https://travis-ci.org/arvindr21/diskdb) [![NPM version](https://badge-me.herokuapp.com/api/npm/diskdb.png)](http://badges.enytc.com/for/npm/diskdb) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/arvindr21/diskdb/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+# diskDB [![Build Status](https://secure.travis-ci.org/arvindr21/diskDB.png?branch=master)](https://travis-ci.org/arvindr21/diskDB) [![NPM version](https://badge-me.herokuapp.com/api/npm/diskdb.png)](http://badges.enytc.com/for/npm/diskdb) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/arvindr21/diskdb/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 [![NPM](https://nodei.co/npm/diskdb.png?downloads=true&stars=true)](https://nodei.co/npm/diskdb/)
 
