@@ -191,7 +191,7 @@ db.articles.count(); // will give the count
 ```
 
 ## Examples
-Refer to the examples folder.
+Refer to the [examples](https://github.com/arvindr21/diskDB/tree/master/examples) folder.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
