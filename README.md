@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/diskdb.png?downloads=true&stars=true)](https://nodei.co/npm/diskdb/)
 
-A Lightweight Disk based JSON Database with a MongoDB like API.
+A Lightweight Disk based JSON Database with a MongoDBextenstion like API.
 
 _You will never know that you are interacting with a File System_
 
@@ -33,7 +33,7 @@ db = db.connect('/path/to/db-folder', ['collection-name']);
 ```js
 db.connect(pathToFolder, ['filename']);
 ```
-Filename will be the name of the JSON file. You can omit the extenstion, diskDB will take care of it for you.
+Filename will be the name of the JSON file. You can omit the extension, diskDB will take care of it for you.
 
 ```js
 var db = require('diskdb');
