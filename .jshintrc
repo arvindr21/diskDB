@@ -7,8 +7,11 @@
   "noarg": true,
   "sub": true,
   "undef": true,
+  "latedef": false,
   "unused": true,
   "boss": true,
   "eqnull": true,
-  "node": true
+  "node": true,
+  "browser": true,
+  "newcap": false,
 }

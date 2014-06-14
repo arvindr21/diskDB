@@ -1,8 +1,8 @@
 {
   "name": "diskdb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "lib/diskdb.js",
-  "description": "A disk-based json database for node",
+  "description": "A Light Weight Disk based JSON Database with a MongoDB like API",
   "homepage": "http://arvindr21.github.io/diskDB",
   "bugs": "https://github.com/arvindr21/diskdb/issues",
   "author": {
@@ -25,7 +25,10 @@
     "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1",
-    "jshint-stylish": "^0.2.0"
+    "jshint-stylish": "^0.2.0",
+    "chalk": "^0.4.0",
+    "node-uuid": "^1.4.1",
+    "merge": "^1.1.3"
   },
   "scripts": {
     "test": "grunt"
