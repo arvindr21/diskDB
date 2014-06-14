@@ -35,28 +35,220 @@
 <a name="diskdb-" class="anchor" href="#diskdb-"><span class="octicon octicon-link"></span></a>diskDB <a href="http://travis-ci.org/arvindr21/diskdb"><img src="https://secure.travis-ci.org/arvindr21/diskdb.png?branch=master" alt="Build Status"></a>
 </h1>
 
-<p>A disk-based json database for node</p>
+<p>A Light Weight Disk based JSON Database with a MongoDB like API.</p>
 
-<h2>
-<a name="work-in-progress" class="anchor" href="#work-in-progress"><span class="octicon octicon-link"></span></a>Work in Progress</h2>
+<p><em>You will never know that you are interacting with a File System <img class="emoji" title=":grin:" alt=":grin:" src="https://assets-cdn.github.com/images/icons/emoji/grin.png" height="20" width="20" align="absmiddle"></em></p>
 
 <h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
 <p>Install the module with: <code>npm install diskdb</code></p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">diskdb</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/path/to/db-folder'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'collection-name'</span><span class="p">]);</span>
+<span class="c1">// you can access the traditional JSON DB methods here</span>
 </pre></div>
 
 <h2>
 <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
 
-<p><em>(Coming soon)</em></p>
+<h3>
+<a name="connect-to-db" class="anchor" href="#connect-to-db"><span class="octicon octicon-link"></span></a>Connect to DB</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">pathToFolder</span><span class="p">,</span> <span class="p">[</span><span class="s1">'filename'</span><span class="p">]);</span>
+</pre></div>
+
+<p>Filename will be the name of the JSON file. You can omit the extenstuin, diskDB will take care of it for you.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="c1">// or simply</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+</pre></div>
+
+<p>This will check for a directory at given path, if it does not exits, diskDB will throw an error and exit. </p>
+
+<p>If the directory exists but the file/collection does not exist, diskDB will create it for you. </p>
+
+<h3>
+<a name="load-collections" class="anchor" href="#load-collections"><span class="octicon octicon-link"></span></a>Load Collections</h3>
+
+<p>Alternatively you can also load collections like </p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="c1">// this</span>
+<span class="nx">db</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">loadCollections</span><span class="p">([</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="c1">//or</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">loadCollections</span><span class="p">([</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="c1">//or</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">loadCollections</span><span class="p">([</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="c1">//or</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+</pre></div>
+
+<h3>
+<a name="writesave-to-collection" class="anchor" href="#writesave-to-collection"><span class="octicon octicon-link"></span></a>Write/Save to Collection</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
+</pre></div>
+
+<p>Once you have created a collection, you can access the collection methods using the dot notation like</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.[</span><span class="nx">methodname</span><span class="p">]</span>
+</pre></div>
+
+<p>To save the data, you can use</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="kd">var</span> <span class="nx">article</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span> <span class="o">:</span> <span class="s2">"diskDB rocks"</span><span class="p">,</span>
+    <span class="nx">published</span> <span class="o">:</span> <span class="s2">"today"</span><span class="p">,</span>
+    <span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span>
+<span class="p">}</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">article</span><span class="p">);</span>
+</pre></div>
+
+<p>The saved data will be </p>
+
+<div class="highlight highlight-js"><pre><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">"title"</span><span class="o">:</span> <span class="s2">"diskDB rocks"</span><span class="p">,</span>
+        <span class="s2">"published"</span><span class="o">:</span> <span class="s2">"today"</span><span class="p">,</span>
+        <span class="s2">"rating"</span><span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">,</span>
+        <span class="s2">"_id"</span><span class="o">:</span> <span class="s2">"0f6047c6c69149f0be0c8f5943be91be"</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+<h3>
+<a name="read-from-collection" class="anchor" href="#read-from-collection"><span class="octicon octicon-link"></span></a>Read from Collection</h3>
+
+<p>There are 2 methods available for reading the JSON collection</p>
+
+<ul>
+<li>db.collectioName.find(query)</li>
+<li>db.collectioName.findOne(query)</li>
+</ul><h4>
+<a name="dbcollectionamefind" class="anchor" href="#dbcollectionamefind"><span class="octicon octicon-link"></span></a>db.collectioName.find()</h4>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
+</pre></div>
+
+<p>This will return all the records</p>
+
+<div class="highlight highlight-js"><pre><span class="p">[{</span> 
+    <span class="nx">title</span><span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span><span class="o">:</span> <span class="s1">'today'</span><span class="p">,</span>
+    <span class="nx">rating</span><span class="o">:</span> <span class="s1">'5 stars'</span><span class="p">,</span>
+    <span class="nx">_id</span><span class="o">:</span> <span class="s1">'0f6047c6c69149f0be0c8f5943be91be'</span> 
+<span class="p">}]</span>
+</pre></div>
+
+<p>You can also query with a criteria like</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">});</span>
+</pre></div>
+
+<p>This will return all the articles who have a rating of 5.</p>
+
+<h4>
+<a name="dbcollectionamefindonequery" class="anchor" href="#dbcollectionamefindonequery"><span class="octicon octicon-link"></span></a>db.collectioName.findOne(query)</h4>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">findOne</span><span class="p">();</span>
+</pre></div>
+
+<p>If you do not pass a query, diskDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span> <span class="s1">'0f6047c6c69149f0be0c8f5943be91be'</span><span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="update-collection" class="anchor" href="#update-collection"><span class="octicon octicon-link"></span></a>Update Collection</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</pre></div>
+
+<p>You can also update one or many objects in the collection</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">multi</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// update multiple - default false</span>
+    <span class="nx">upsert</span><span class="o">:</span> <span class="kc">false</span> <span class="c1">// if object is not found, add it (update-insert) - default false</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Usage </p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+
+<span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks'</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">dataToBeUpdate</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks again!'</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="nx">multi</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+     <span class="nx">upsert</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">dataToBeUpdate</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">updated</span><span class="p">);</span> <span class="c1">// { updated: 1, inserted: 0 }</span>
+</pre></div>
+
+<h3>
+<a name="remove-collection" class="anchor" href="#remove-collection"><span class="octicon octicon-link"></span></a>Remove Collection</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">query</span><span class="p">);</span>
+</pre></div>
+
+<p>You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">});</span>
+</pre></div>
+
+<p>Will remove only the matched objects, where as </p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+</pre></div>
+
+<p>Will remove the file from folder.</p>
+
+<h3>
+<a name="count" class="anchor" href="#count"><span class="octicon octicon-link"></span></a>Count</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">count</span><span class="p">();</span>
+</pre></div>
+
+<p>Will return the count of objects in the Collection</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">count</span><span class="p">();</span> <span class="c1">// will give the count</span>
+</pre></div>
 
 <h2>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
-<p><em>(Coming soon)</em></p>
+<p>Refer to the examples folder.</p>
 
 <h2>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
@@ -66,9 +258,21 @@
 <h2>
 <a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
 
-<p><em>(Nothing yet)</em></p>
+<ul>
+<li>0.1.0
 
-<h2>
+<ul>
+<li>Base Module with
+
+<ul>
+<li>Connect to a Folder</li>
+<li>Access a Collection/File</li>
+<li>Create Read Update Delete on JSON object</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>Copyright (c) 2014 Arvind Ravulavaru. Licensed under the MIT license.</p>
