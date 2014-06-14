@@ -11,6 +11,6 @@ var article = {
 var savedArticle = db.articles.save(article);
 
 db.articles.remove();
-//db.articles.remove({rating : "5 stars"});
+//db.articles.remove({rating : '5 stars'});
 
 // run : node remove.js
