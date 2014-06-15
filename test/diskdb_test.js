@@ -37,12 +37,12 @@ var dbPath = 'test/testdb',
 
 exports.connectNload = {
     setUp: function(done) {
+        deleteFolderRecursive(dbPath);
+
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         done();
     },
     'connect : ': function(test) {
@@ -72,11 +72,9 @@ exports.connectNload = {
 exports.count = {
     setUp: function(done) {
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         // init diskdb
         diskdb.connect(dbPath, collection);
         // delete all collections
@@ -99,11 +97,9 @@ exports.count = {
 exports.saveData = {
     setUp: function(done) {
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         // init diskdb
         diskdb.connect(dbPath, collection);
         // delete all collections
@@ -124,11 +120,9 @@ exports.saveData = {
 exports.findAll = {
     setUp: function(done) {
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         // init diskdb
         diskdb.connect(dbPath, collection);
         // delete all collections
@@ -161,11 +155,9 @@ exports.findAll = {
 exports.findOne = {
     setUp: function(done) {
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         // init diskdb
         diskdb.connect(dbPath, collection);
         // delete all collections
@@ -199,11 +191,9 @@ exports.findOne = {
 exports.update = {
     setUp: function(done) {
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         // init diskdb
         diskdb.connect(dbPath, collection);
         // delete all collections
@@ -259,11 +249,9 @@ exports.update = {
 exports.remove = {
     setUp: function(done) {
         // create the directory
-        fs.exists(dbPath, function(e) {
-            if (!e) {
-                fs.mkdirSync(dbPath);
-            }
-        });
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
         // init diskdb
         diskdb.connect(dbPath, collection);
         // delete all collections
@@ -293,4 +281,18 @@ exports.remove = {
         test.equal(diskdb.articles, undefined, 'collection should be removed');
         test.done();
     },
+};
+
+var deleteFolderRecursive = function(path) {
+    if (fs.existsSync(path)) {
+        fs.readdirSync(path).forEach(function(file) {
+            var curPath = path + '/' + file;
+            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
 };
