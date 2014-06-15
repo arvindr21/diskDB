@@ -20,7 +20,7 @@ _You will never know that you are interacting with a File System_
 * [Examples](#examples)
 
 ## Getting Started
-Install the module with: 
+Install the module locally :  
 ```bash
 $ npm install diskdb
 ```
@@ -93,6 +93,8 @@ var article = {
     rating : "5 stars"
 }
 db.articles.save(article);
+// or
+db.articles.save([article]);
 ```
 The saved data will be 
 ```js
@@ -104,6 +106,46 @@ The saved data will be
         "_id": "0f6047c6c69149f0be0c8f5943be91be"
     }
 ]
+```
+You can also save multiple objects at once like
+
+```js
+var db = require('diskdb');
+db.connect('db', ['articles']);
+var article1 = {
+    title : 'diskDB rocks',
+    published : 'today',
+    rating : '5 stars'
+}
+
+var article2 = {
+    title : 'diskDB rocks',
+    published : 'yesterday',
+    rating : '5 stars'
+}
+
+var article3 = {
+    title : 'diskDB rocks',
+    published : 'today',
+    rating : '4 stars'
+}
+db.articles.save([article1, article2, article3]);
+```
+And this will return the inserted objects like
+
+```js
+[ { title: 'diskDB rocks',
+    published: 'today',
+    rating: '4 stars',
+    _id: 'b1cdbb3525b84e8c822fc78896d0ca7b' },
+  { title: 'diskDB rocks',
+    published: 'yesterday',
+    rating: '5 stars',
+    _id: '42997c62e1714e9f9d88bf3b87901f3b' },
+  { title: 'diskDB rocks',
+    published: 'today',
+    rating: '5 stars',
+    _id: '4ca1c1597ddc4020bc41b4418e7a568e' } ]
 ```
 
 ### Read from Collection
@@ -167,16 +209,16 @@ var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 
 var query = {
-	title : 'diskDB rocks'
+  title : 'diskDB rocks'
 };
 
 var dataToBeUpdate = {
-	title : 'diskDB rocks again!',
+  title : 'diskDB rocks again!',
 };
 
 var options = {
-	 multi: false,
-	 upsert: false
+   multi: false,
+   upsert: false
 };
 
 var updated = db.articles.update(query, dataToBeUpdate, options);

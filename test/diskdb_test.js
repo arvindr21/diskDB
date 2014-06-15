@@ -115,6 +115,14 @@ exports.saveData = {
         test.equal(diskdb.articles.save(article).title, article.title, 'One record should get saved');
         test.done();
     },
+
+    'save multiple: ': function(test) {
+        test.expect(3);
+        test.equal(diskdb.articles.count(), 0, 'No records before save');
+        test.equal(diskdb.articles.save([article]).length, 1, 'One record should get saved');
+        test.equal(diskdb.articles.save([article, article2]).length, 2, 'Two records should get saved');
+        test.done();
+    },
 };
 
 exports.findAll = {
