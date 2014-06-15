@@ -353,7 +353,7 @@ An average of few tests can be found below
         <td>154 (ms)</td>
     </tr>
     <tr>
-        <td>File Size (before deletion)</td>
+        <td>File Size</td>
         <td>0.000111 (MB)</td>
         <td>0.116671 (MB)</td>
         <td>1.196671 (MB)</td>
