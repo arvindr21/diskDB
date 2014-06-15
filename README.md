@@ -273,92 +273,92 @@ An average of few tests can be found below
 
 <table>
     <tr>
-        <td>x</td>
-        <td>1</td>
-        <td>1000</td>
-        <td>10000</td>
-        <td>100000</td>
-        <td>1000000</td>
+        <td></td>
+        <td>1 (object)</td>
+        <td>1000 (object)</td>
+        <td>10000 (object)</td>
+        <td>100000 (object)</td>
+        <td>1000000 (object)</td>
     </tr>
     <tr>
         <td>Insert</td>
-        <td>1</td>
-        <td>15</td>
-        <td>137</td>
-        <td>1782</td>
-        <td>14425</td>
+        <td>1 (ms)</td>
+        <td>15 (ms)</td>
+        <td>137 (ms)</td>
+        <td>1782 (ms)</td>
+        <td>14425 (ms)</td>
     </tr>
     <tr>
         <td>Find All without query</td>
-        <td>0</td>
-        <td>2</td>
-        <td>12</td>
-        <td>204</td>
-        <td>2923</td>
+        <td>0 (ms)</td>
+        <td>2 (ms)</td>
+        <td>12 (ms)</td>
+        <td>204 (ms)</td>
+        <td>2923 (ms)</td>
     </tr>
     <tr>
         <td>Find All with query</td>
-        <td>0</td>
-        <td>2</td>
-        <td>17</td>
-        <td>738</td>
-        <td>1985</td>
+        <td>0 (ms)</td>
+        <td>2 (ms)</td>
+        <td>17 (ms)</td>
+        <td>738 (ms)</td>
+        <td>1985 (ms)</td>
     </tr>
     <tr>
         <td>Find One without query</td>
-        <td>0</td>
-        <td>1</td>
-        <td>9</td>
-        <td>791</td>
-        <td>1676</td>
+        <td>0 (ms)</td>
+        <td>1 (ms)</td>
+        <td>9 (ms)</td>
+        <td>791 (ms)</td>
+        <td>1676 (ms)</td>
     </tr>
     <tr>
         <td>Find One with query</td>
-        <td>0</td>
-        <td>1</td>
-        <td>8</td>
-        <td>219</td>
-        <td>1410</td>
+        <td>0 (ms)</td>
+        <td>1 (ms)</td>
+        <td>8 (ms)</td>
+        <td>219 (ms)</td>
+        <td>1410 (ms)</td>
     </tr>
     <tr>
         <td>Update all records</td>
-        <td>1</td>
-        <td>7</td>
-        <td>61</td>
-        <td>206</td>
-        <td>48035</td>
+        <td>1 (ms)</td>
+        <td>7 (ms)</td>
+        <td>61 (ms)</td>
+        <td>206 (ms)</td>
+        <td>48035 (ms)</td>
     </tr>
     <tr>
         <td>Get Count</td>
-        <td>0</td>
-        <td>3</td>
-        <td>11</td>
-        <td>260</td>
-        <td>2420</td>
+        <td>0 (ms)</td>
+        <td>3 (ms)</td>
+        <td>11 (ms)</td>
+        <td>260 (ms)</td>
+        <td>2420 (ms)</td>
     </tr>
     <tr>
         <td>Remove with query</td>
-        <td>0</td>
-        <td>7</td>
-        <td>59</td>
-        <td>984</td>
-        <td>48191</td>
+        <td>0 (ms)</td>
+        <td>7 (ms)</td>
+        <td>59 (ms)</td>
+        <td>984 (ms)</td>
+        <td>48191 (ms)</td>
     </tr>
     <tr>
         <td>Remove collection</td>
-        <td>0</td>
-        <td>1</td>
-        <td>4</td>
-        <td>52</td>
-        <td>154</td>
+        <td>0 (ms)</td>
+        <td>1 (ms)</td>
+        <td>4 (ms)</td>
+        <td>52 (ms)</td>
+        <td>154 (ms)</td>
     </tr>
     <tr>
-        <td>File Size (before deletion - MB)</td>
-        <td>0.000111</td>
-        <td>0.116671</td>
-        <td>1.196671</td>
-        <td>12.266671</td>
-        <td>125.666671</td>
+        <td>File Size (before deletion)</td>
+        <td>0.000111 (MB)</td>
+        <td>0.116671 (MB)</td>
+        <td>1.196671 (MB)</td>
+        <td>12.266671 (MB)</td>
+        <td>125.666671 (MB)</td>
     </tr>
 </table>
 
