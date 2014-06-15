@@ -20,6 +20,8 @@
         <p class="header">A Lightweight Disk based JSON Database with a MongoDB like API for Node</p>
 
         <ul>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/tarball/master">Download TAR</a></li>
           <li><a class="buttons github" href="https://github.com/arvindr21/diskDB">View On GitHub</a></li>
         </ul>
 
@@ -60,7 +62,10 @@
 </ul><h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
-<p>Install the module with: <code>npm install diskdb</code></p>
+<p>Install the module with: </p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>npm install diskdb
+</pre></div>
 
 <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
 <span class="nx">db</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/path/to/db-folder'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'collection-name'</span><span class="p">]);</span>
@@ -120,9 +125,9 @@
 <div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
 </pre></div>
 
-<p>Once you have created a collection, you can access the collection methods using the dot notation like</p>
+<p>Once you have loaded a collection, you can access the collection's methods using the dot notation like</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.[</span><span class="nx">methodname</span><span class="p">]</span>
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.[</span><span class="nx">collectionName</span><span class="p">].[</span><span class="nx">methodname</span><span class="p">]</span>
 </pre></div>
 
 <p>To save the data, you can use</p>
@@ -182,7 +187,7 @@
 <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">});</span>
 </pre></div>
 
-<p>This will return all the articles who have a rating of 5.</p>
+<p>This will return all the articles which have a rating of 5.</p>
 
 <h4>
 <a name="dbcollectionamefindonequery" class="anchor" href="#dbcollectionamefindonequery"><span class="octicon octicon-link"></span></a>db.collectioName.findOne(query)</h4>
