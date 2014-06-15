@@ -215,7 +215,7 @@ Refer to the [examples](https://github.com/arvindr21/diskDB/tree/master/examples
 
 ## Contributing
 
-See the [CONTRIBUTING Guidelines](https://github.com/arvindr21/disDB/blob/master/CONTRIBUTING.md)
+See the [CONTRIBUTING Guidelines](https://github.com/arvindr21/diskDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
 * 0.1.x
