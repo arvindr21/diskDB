@@ -131,7 +131,7 @@ var article3 = {
 }
 db.articles.save([article1, article2, article3]);
 ```
-And this will return the inserted objects like
+And this will return the inserted objects
 
 ```js
 [ { title: 'diskDB rocks',
