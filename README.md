@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/diskdb.png?downloads=true&stars=true)](https://nodei.co/npm/diskdb/)
 
-A Lightweight Disk based JSON Database with a MongoDB like API.
+A Lightweight Disk based JSON Database with a MongoDB like API for Node.
 
 _You will never know that you are interacting with a File System_
 
@@ -207,14 +207,16 @@ db.articles.count(); // will give the count
 Refer to the [examples](https://github.com/arvindr21/diskDB/tree/master/examples) folder.
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+See the [CONTRIBUTING Guidelines](https://github.com/arvindr21/disDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
-* 0.1.0
+* 0.1.x
   * Base Module with
     * Connect to a Folder
     * Access a Collection/File
     * Create Read Update Delete on JSON object
+    * minor fixes and tests
 
 ## License
 Copyright (c) 2014 Arvind Ravulavaru. Licensed under the MIT license.

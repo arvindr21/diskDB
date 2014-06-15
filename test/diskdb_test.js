@@ -1,6 +1,7 @@
 'use strict';
 
 var diskdb = require('../lib/diskdb.js');
+var fs = require('fs');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -22,15 +23,274 @@ var diskdb = require('../lib/diskdb.js');
     test.ifError(value)
 */
 
-exports.diskdb = {
-  setUp: function(done) {
-    // setup here
-    done();
-  },
-  'no args': function(test) {
-    test.expect(1);
-    // tests here
-    test.equal(diskdb.awesome(), 'awesome', 'should be awesome.');
-    test.done();
-  }
+var dbPath = 'test/testdb',
+    collection = ['articles'],
+    collections = ['comments', 'rating'],
+    article = {
+        title: 'diskDB rocks',
+        published: 'today'
+    },
+    article2 = {
+        title: 'diskDB rocks',
+        published: 'yesterday'
+    };
+
+exports.connectNload = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        done();
+    },
+    'connect : ': function(test) {
+        test.expect(1);
+        test.equal(typeof(diskdb.connect(dbPath, collection)[collection[0]]), 'object', 'Successfully Connected');
+        test.done();
+    },
+    'loadCollections : ': function(test) {
+        test.expect(3);
+        // connect to DB
+        diskdb.connect(dbPath);
+        // load single collecion
+        test.equal(diskdb.loadCollections(collection)[collection[0]].collectionName, collection[0], 'Loading single collection');
+        test.equal(diskdb.loadCollections(collections)[collections[0]].collectionName, collections[0], 'Loading multiple collection');
+        test.equal(diskdb.loadCollections(collections)[collections[1]].collectionName, collections[1], 'Loading multiple collection');
+        test.done();
+    },
+    tearDown: function(callback) {
+        // remove collections
+        diskdb.loadCollections(collections);
+        diskdb[collections[0]].remove();
+        diskdb[collections[1]].remove();
+        callback();
+    },
+};
+
+exports.count = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        // init diskdb
+        diskdb.connect(dbPath, collection);
+        // delete all collections
+        diskdb.articles.remove();
+        //reinit the collection
+        diskdb.loadCollections(collection);
+
+        done();
+    },
+    'count : ': function(test) {
+        test.expect(2);
+        test.equal(diskdb.articles.count(), 0, 'Count should be 0');
+        diskdb.articles.save(article);
+        diskdb.articles.save(article2);
+        test.equal(diskdb.articles.count(), 2, 'Count should be 2');
+        test.done();
+    },
+};
+
+exports.saveData = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        // init diskdb
+        diskdb.connect(dbPath, collection);
+        // delete all collections
+        diskdb.articles.remove();
+        //reinit the collection
+        diskdb.loadCollections(collection);
+
+        done();
+    },
+    'save : ': function(test) {
+        test.expect(2);
+        test.equal(diskdb.articles.count(), 0, 'No records before save');
+        test.equal(diskdb.articles.save(article).title, article.title, 'One record should get saved');
+        test.done();
+    },
+};
+
+exports.findAll = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        // init diskdb
+        diskdb.connect(dbPath, collection);
+        // delete all collections
+        diskdb.articles.remove();
+        //reinit the collection
+        diskdb.loadCollections(collection);
+        done();
+    },
+
+    'findAll : ': function(test) {
+        test.expect(3);
+        //save two record
+        diskdb.articles.save(article);
+        diskdb.articles.save(article2);
+
+        test.equal(diskdb.articles.find().length, 2, 'Should find two record');
+        // find with a query
+        test.equal(diskdb.articles.find({
+            title: 'diskDB rocks'
+        }).length, 2, 'Should find two record on query');
+        // no record should be returned when the query does not match any records
+        test.equal(diskdb.articles.find({
+            title: 'dummy text'
+        }).length, 0, 'Should find no records');
+
+        test.done();
+    },
+};
+
+exports.findOne = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        // init diskdb
+        diskdb.connect(dbPath, collection);
+        // delete all collections
+        diskdb.articles.remove();
+        //reinit the collection
+        diskdb.loadCollections(collection);
+        done();
+    },
+
+    'findOne : ': function(test) {
+        var query = 'diskDB rocks';
+        test.expect(3);
+        //save two record
+        diskdb.articles.save(article);
+        diskdb.articles.save(article2);
+
+        test.equal(diskdb.articles.findOne().published, 'today', 'Should return the first record');
+        // find with a query
+        test.equal(diskdb.articles.findOne({
+            title: query
+        }).title, query, 'Should find One record on query');
+        // no record should be returned when the query does not match any records
+        test.equal(diskdb.articles.find({
+            title: 'dummy text'
+        }).title, undefined, 'No records should be found');
+
+        test.done();
+    },
+};
+
+exports.update = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        // init diskdb
+        diskdb.connect(dbPath, collection);
+        // delete all collections
+        diskdb.articles.remove();
+        //reinit the collection
+        diskdb.loadCollections(collection);
+        done();
+    },
+
+    'update : ': function(test) {
+        var query = {
+            'published': 'today'
+        };
+        var options = {
+            'multi': false,
+            'upsert': false
+        };
+
+        test.expect(4);
+        //save two record
+        diskdb.articles.save(article);
+        // before update
+        test.equal(diskdb.articles.findOne().published, article.published, 'Should return the same record as inserted');
+        // after update
+        test.equal(diskdb.articles.update(query, article2, options).updated, 1, 'Should return the updated objects count');
+
+        //change options
+        query = {
+            'dummy': 'not found'
+        };
+        options = {
+            'multi': false,
+            'upsert': true
+        };
+        // should insert
+        test.equal(diskdb.articles.update(query, article2, options).inserted, 1, 'Should return the inserted objects count');
+
+        query = {
+            published: 'yesterday'
+        };
+
+        options = {
+            'multi': true,
+            'upsert': true
+        };
+
+        // should update 2 record
+        test.equal(diskdb.articles.update(query, article, options).updated, 2, 'Should return the updated objects count');
+        test.done();
+    },
+};
+
+exports.remove = {
+    setUp: function(done) {
+        // create the directory
+        fs.exists(dbPath, function(e) {
+            if (!e) {
+                fs.mkdirSync(dbPath);
+            }
+        });
+        // init diskdb
+        diskdb.connect(dbPath, collection);
+        // delete all collections
+        diskdb.articles.remove();
+        //reinit the collection
+        diskdb.loadCollections(collection);
+        done();
+    },
+
+    'remove : ': function(test) {
+        test.expect(5);
+        //save two record
+        diskdb.articles.save(article);
+        diskdb.articles.save(article2);
+
+        //before deletion
+        test.equal(diskdb.articles.count(), 2, 'There should be 2 records in the collection');
+        //deletion
+        test.equal(diskdb.articles.remove({
+            'published': 'today'
+        }), true, 'Deletion should be successful');
+        //after deletion
+        test.equal(diskdb.articles.count(), 1, 'There should be 1 record in the collection');
+        //remove the collection completely
+        test.equal(diskdb.articles.remove(), true, 'Deletion should be successful');
+        //the collection should not exist any more
+        test.equal(diskdb.articles, undefined, 'collection should be removed');
+        test.done();
+    },
 };
