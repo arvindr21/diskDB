@@ -33,7 +33,7 @@ db = db.connect('/path/to/db-folder', ['collection-name']);
 ```js
 db.connect(pathToFolder, ['filename']);
 ```
-Filename will be the name of the JSON file. You can omit the extenstion, diskDB will take care of it for you.
+Filename will be the name of the JSON file. You can omit the extension, diskDB will take care of it for you.
 
 ```js
 var db = require('diskdb');
@@ -63,6 +63,13 @@ db.connect('/examples/db')
 //or
 db.connect('/examples/db', ['articles']);
 ```
+#### Load Multiple Collections
+
+```js
+var db = require('diskdb');
+db.connect('/examples/db', ['articles','comments','users']);
+```
+
 
 ### Write/Save to Collection
 ```js
