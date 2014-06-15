@@ -275,10 +275,10 @@ An average of few tests can be found below
     <tr>
         <td></td>
         <td>1 (object)</td>
-        <td>1000 (object)</td>
-        <td>10000 (object)</td>
-        <td>100000 (object)</td>
-        <td>1000000 (object)</td>
+        <td>1000 (objects)</td>
+        <td>10000 (objects)</td>
+        <td>100000 (objects)</td>
+        <td>1000000 (objects)</td>
     </tr>
     <tr>
         <td>Insert</td>
