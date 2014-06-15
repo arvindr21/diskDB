@@ -20,7 +20,10 @@ _You will never know that you are interacting with a File System_
 * [Examples](#examples)
 
 ## Getting Started
-Install the module with: `npm install diskdb`
+Install the module with: 
+```bash
+$ npm install diskdb
+```
 
 ```js
 var db = require('diskdb');
@@ -75,10 +78,10 @@ db.connect('/examples/db', ['articles','comments','users']);
 ```js
 db.collectioName.save(object);
 ```
-Once you have created a collection, you can access the collection methods using the dot notation like
+Once you have loaded a collection, you can access the collection's methods using the dot notation like
 
 ```js
-db.articles.[methodname]
+db.[collectionName].[methodname]
 ```
 To save the data, you can use
 ```js
@@ -130,7 +133,7 @@ var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.find({rating : "5 stars"});
 ```
-This will return all the articles who have a rating of 5.
+This will return all the articles which have a rating of 5.
 
 #### db.collectioName.findOne(query)
 ```js
