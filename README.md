@@ -18,6 +18,9 @@ _You will never know that you are interacting with a File System_
   * [Remove](#remove-collection)
   * [Count](#count)
 * [Examples](#examples)
+* [Performance](#performance)
+* [Contributing](#contributing)
+* [Release History](#release-history)
 
 ## Getting Started
 Install the module locally :  
@@ -258,8 +261,109 @@ db.articles.count(); // will give the count
 ## Examples
 Refer to the [examples](https://github.com/arvindr21/diskDB/tree/master/examples) folder.
 
-## Contributing
+## Performance
+To validate diskDB's performance and to check if it meets your needs, you can clone this repo and run
 
+```bash
+$ node performance/time.js
+```
+An average of few tests can be found below
+
+#### Time taken to process (x) articles (in ms) vs Action Performed
+
+<table>
+    <tr>
+        <td>x</td>
+        <td>1</td>
+        <td>1000</td>
+        <td>10000</td>
+        <td>100000</td>
+        <td>1000000</td>
+    </tr>
+    <tr>
+        <td>Insert</td>
+        <td>1</td>
+        <td>15</td>
+        <td>137</td>
+        <td>1782</td>
+        <td>14425</td>
+    </tr>
+    <tr>
+        <td>Find All without query</td>
+        <td>0</td>
+        <td>2</td>
+        <td>12</td>
+        <td>204</td>
+        <td>2923</td>
+    </tr>
+    <tr>
+        <td>Find All with query</td>
+        <td>0</td>
+        <td>2</td>
+        <td>17</td>
+        <td>738</td>
+        <td>1985</td>
+    </tr>
+    <tr>
+        <td>Find One without query</td>
+        <td>0</td>
+        <td>1</td>
+        <td>9</td>
+        <td>791</td>
+        <td>1676</td>
+    </tr>
+    <tr>
+        <td>Find One with query</td>
+        <td>0</td>
+        <td>1</td>
+        <td>8</td>
+        <td>219</td>
+        <td>1410</td>
+    </tr>
+    <tr>
+        <td>Update all records</td>
+        <td>1</td>
+        <td>7</td>
+        <td>61</td>
+        <td>206</td>
+        <td>48035</td>
+    </tr>
+    <tr>
+        <td>Get Count</td>
+        <td>0</td>
+        <td>3</td>
+        <td>11</td>
+        <td>260</td>
+        <td>2420</td>
+    </tr>
+    <tr>
+        <td>Remove with query</td>
+        <td>0</td>
+        <td>7</td>
+        <td>59</td>
+        <td>984</td>
+        <td>48191</td>
+    </tr>
+    <tr>
+        <td>Remove collection</td>
+        <td>0</td>
+        <td>1</td>
+        <td>4</td>
+        <td>52</td>
+        <td>154</td>
+    </tr>
+    <tr>
+        <td>File Size (before deletion - MB)</td>
+        <td>0.000111</td>
+        <td>0.116671</td>
+        <td>1.196671</td>
+        <td>12.266671</td>
+        <td>125.666671</td>
+    </tr>
+</table>
+
+
+## Contributing
 See the [CONTRIBUTING Guidelines](https://github.com/arvindr21/diskDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
