@@ -20,6 +20,8 @@
         <p class="header">A Lightweight Disk based JSON Database with a MongoDB like API for Node</p>
 
         <ul>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/tarball/master">Download TAR</a></li>
           <li><a class="buttons github" href="https://github.com/arvindr21/diskDB">View On GitHub</a></li>
         </ul>
 
@@ -60,7 +62,7 @@
 </ul><h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
-<p>Install the module with: </p>
+<p>Install the module locally :  </p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>npm install diskdb
 </pre></div>
@@ -138,6 +140,8 @@
     <span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span>
 <span class="p">}</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">article</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">save</span><span class="p">([</span><span class="nx">article</span><span class="p">]);</span>
 </pre></div>
 
 <p>The saved data will be </p>
@@ -150,6 +154,46 @@
         <span class="s2">"_id"</span><span class="o">:</span> <span class="s2">"0f6047c6c69149f0be0c8f5943be91be"</span>
     <span class="p">}</span>
 <span class="p">]</span>
+</pre></div>
+
+<p>You can also save multiple objects at once like</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="kd">var</span> <span class="nx">article1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span> <span class="o">:</span> <span class="s1">'today'</span><span class="p">,</span>
+    <span class="nx">rating</span> <span class="o">:</span> <span class="s1">'5 stars'</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">article2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span> <span class="o">:</span> <span class="s1">'yesterday'</span><span class="p">,</span>
+    <span class="nx">rating</span> <span class="o">:</span> <span class="s1">'5 stars'</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">article3</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span> <span class="o">:</span> <span class="s1">'today'</span><span class="p">,</span>
+    <span class="nx">rating</span> <span class="o">:</span> <span class="s1">'4 stars'</span>
+<span class="p">}</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">save</span><span class="p">([</span><span class="nx">article1</span><span class="p">,</span> <span class="nx">article2</span><span class="p">,</span> <span class="nx">article3</span><span class="p">]);</span>
+</pre></div>
+
+<p>And this will return the inserted objects</p>
+
+<div class="highlight highlight-js"><pre><span class="p">[</span> <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span><span class="o">:</span> <span class="s1">'today'</span><span class="p">,</span>
+    <span class="nx">rating</span><span class="o">:</span> <span class="s1">'4 stars'</span><span class="p">,</span>
+    <span class="nx">_id</span><span class="o">:</span> <span class="s1">'b1cdbb3525b84e8c822fc78896d0ca7b'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span><span class="o">:</span> <span class="s1">'yesterday'</span><span class="p">,</span>
+    <span class="nx">rating</span><span class="o">:</span> <span class="s1">'5 stars'</span><span class="p">,</span>
+    <span class="nx">_id</span><span class="o">:</span> <span class="s1">'42997c62e1714e9f9d88bf3b87901f3b'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span><span class="o">:</span> <span class="s1">'today'</span><span class="p">,</span>
+    <span class="nx">rating</span><span class="o">:</span> <span class="s1">'5 stars'</span><span class="p">,</span>
+    <span class="nx">_id</span><span class="o">:</span> <span class="s1">'4ca1c1597ddc4020bc41b4418e7a568e'</span> <span class="p">}</span> <span class="p">]</span>
 </pre></div>
 
 <h3>
@@ -222,16 +266,16 @@
 <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
 
 <span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks'</span>
+  <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks'</span>
 <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">dataToBeUpdate</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks again!'</span><span class="p">,</span>
+  <span class="nx">title</span> <span class="o">:</span> <span class="s1">'diskDB rocks again!'</span><span class="p">,</span>
 <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
-     <span class="nx">multi</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-     <span class="nx">upsert</span><span class="o">:</span> <span class="kc">false</span>
+   <span class="nx">multi</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+   <span class="nx">upsert</span><span class="o">:</span> <span class="kc">false</span>
 <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">updated</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">dataToBeUpdate</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
