@@ -20,6 +20,8 @@
         <p class="header">A Lightweight Disk based JSON Database with a MongoDB like API for Node</p>
 
         <ul>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/tarball/master">Download TAR</a></li>
           <li><a class="buttons github" href="https://github.com/arvindr21/diskDB">View On GitHub</a></li>
         </ul>
 
@@ -57,6 +59,9 @@
 </ul>
 </li>
 <li><a href="#examples">Examples</a></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#release-history">Release History</a></li>
 </ul><h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
@@ -321,6 +326,108 @@
 <p>Refer to the <a href="https://github.com/arvindr21/diskDB/tree/master/examples">examples</a> folder.</p>
 
 <h2>
+<a name="performance" class="anchor" href="#performance"><span class="octicon octicon-link"></span></a>Performance</h2>
+
+<p>To validate diskDB's performance and to check if it meets your needs, you can clone this repo and run</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>node performance/time.js
+</pre></div>
+
+<p>An average of few tests can be found below</p>
+
+<h4>
+<a name="time-taken-to-process-x-articles-in-ms-vs-action-performed" class="anchor" href="#time-taken-to-process-x-articles-in-ms-vs-action-performed"><span class="octicon octicon-link"></span></a>Time taken to process (x) articles (in ms) vs Action Performed</h4>
+
+<table>
+<tr>
+<td></td>
+        <td>1 (object)</td>
+        <td>1000 (objects)</td>
+        <td>10000 (objects)</td>
+        <td>100000 (objects)</td>
+        <td>1000000 (objects)</td>
+    </tr>
+<tr>
+<td>Save</td>
+        <td>1 (ms)</td>
+        <td>15 (ms)</td>
+        <td>137 (ms)</td>
+        <td>1782 (ms)</td>
+        <td>14425 (ms)</td>
+    </tr>
+<tr>
+<td>Find all without query</td>
+        <td>0 (ms)</td>
+        <td>2 (ms)</td>
+        <td>12 (ms)</td>
+        <td>204 (ms)</td>
+        <td>2923 (ms)</td>
+    </tr>
+<tr>
+<td>Find all with query</td>
+        <td>0 (ms)</td>
+        <td>2 (ms)</td>
+        <td>17 (ms)</td>
+        <td>738 (ms)</td>
+        <td>1985 (ms)</td>
+    </tr>
+<tr>
+<td>Find one without query</td>
+        <td>0 (ms)</td>
+        <td>1 (ms)</td>
+        <td>9 (ms)</td>
+        <td>791 (ms)</td>
+        <td>1676 (ms)</td>
+    </tr>
+<tr>
+<td>Find one with query</td>
+        <td>0 (ms)</td>
+        <td>1 (ms)</td>
+        <td>8 (ms)</td>
+        <td>219 (ms)</td>
+        <td>1410 (ms)</td>
+    </tr>
+<tr>
+<td>Update all records</td>
+        <td>1 (ms)</td>
+        <td>7 (ms)</td>
+        <td>61 (ms)</td>
+        <td>206 (ms)</td>
+        <td>48035 (ms)</td>
+    </tr>
+<tr>
+<td>Get count</td>
+        <td>0 (ms)</td>
+        <td>3 (ms)</td>
+        <td>11 (ms)</td>
+        <td>260 (ms)</td>
+        <td>2420 (ms)</td>
+    </tr>
+<tr>
+<td>Remove with query</td>
+        <td>0 (ms)</td>
+        <td>7 (ms)</td>
+        <td>59 (ms)</td>
+        <td>984 (ms)</td>
+        <td>48191 (ms)</td>
+    </tr>
+<tr>
+<td>Remove collection</td>
+        <td>0 (ms)</td>
+        <td>1 (ms)</td>
+        <td>4 (ms)</td>
+        <td>52 (ms)</td>
+        <td>154 (ms)</td>
+    </tr>
+<tr>
+<td>File size</td>
+        <td>0.000111 (MB)</td>
+        <td>0.116671 (MB)</td>
+        <td>1.196671 (MB)</td>
+        <td>12.266671 (MB)</td>
+        <td>125.666671 (MB)</td>
+    </tr>
+</table><h2>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <p>See the <a href="https://github.com/arvindr21/diskDB/blob/master/CONTRIBUTING.md">CONTRIBUTING Guidelines</a></p>
