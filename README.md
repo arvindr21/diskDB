@@ -289,7 +289,7 @@ An average of few tests can be found below
         <td>14425 (ms)</td>
     </tr>
     <tr>
-        <td>Find All without query</td>
+        <td>Find all without query</td>
         <td>0 (ms)</td>
         <td>2 (ms)</td>
         <td>12 (ms)</td>
@@ -297,7 +297,7 @@ An average of few tests can be found below
         <td>2923 (ms)</td>
     </tr>
     <tr>
-        <td>Find All with query</td>
+        <td>Find all with query</td>
         <td>0 (ms)</td>
         <td>2 (ms)</td>
         <td>17 (ms)</td>
@@ -305,7 +305,7 @@ An average of few tests can be found below
         <td>1985 (ms)</td>
     </tr>
     <tr>
-        <td>Find One without query</td>
+        <td>Find one without query</td>
         <td>0 (ms)</td>
         <td>1 (ms)</td>
         <td>9 (ms)</td>
@@ -313,7 +313,7 @@ An average of few tests can be found below
         <td>1676 (ms)</td>
     </tr>
     <tr>
-        <td>Find One with query</td>
+        <td>Find one with query</td>
         <td>0 (ms)</td>
         <td>1 (ms)</td>
         <td>8 (ms)</td>
@@ -329,7 +329,7 @@ An average of few tests can be found below
         <td>48035 (ms)</td>
     </tr>
     <tr>
-        <td>Get Count</td>
+        <td>Get count</td>
         <td>0 (ms)</td>
         <td>3 (ms)</td>
         <td>11 (ms)</td>
@@ -353,7 +353,7 @@ An average of few tests can be found below
         <td>154 (ms)</td>
     </tr>
     <tr>
-        <td>File Size</td>
+        <td>File size</td>
         <td>0.000111 (MB)</td>
         <td>0.116671 (MB)</td>
         <td>1.196671 (MB)</td>
