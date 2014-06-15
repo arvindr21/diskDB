@@ -269,7 +269,7 @@ $ node performance/time.js
 ```
 An average of few tests can be found below
 
-#### Time taken to process (x) articles (in ms) vs Action Performed
+#### Time taken to process x number of objects (in ms) vs Action Performed
 
 <table>
     <tr>
@@ -372,7 +372,7 @@ See the [CONTRIBUTING Guidelines](https://github.com/arvindr21/diskDB/blob/maste
     * Connect to a Folder
     * Access a Collection/File
     * Create Read Update Delete on JSON object
-    * minor fixes and tests
+    * Minor fixes and tests
 
 ## License
 Copyright (c) 2014 Arvind Ravulavaru. Licensed under the MIT license.
