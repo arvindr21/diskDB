@@ -281,7 +281,7 @@ An average of few tests can be found below
         <td>1000000 (objects)</td>
     </tr>
     <tr>
-        <td>Insert</td>
+        <td>Save</td>
         <td>1 (ms)</td>
         <td>15 (ms)</td>
         <td>137 (ms)</td>
