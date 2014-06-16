@@ -47,7 +47,7 @@ exports.connectNload = {
     },
     'connect : ': function(test) {
         test.expect(1);
-        test.equal(typeof(diskdb.connect(dbPath, collection)[collection[0]]), 'object', 'Successfully Connected');
+        test.equal(typeof(diskdb.connect(dbPath, collection)[collection[0]]), 'object', 'Successfully Connected and collection instantiated');
         test.done();
     },
     'loadCollections : ': function(test) {
@@ -56,6 +56,7 @@ exports.connectNload = {
         diskdb.connect(dbPath);
         // load single collecion
         test.equal(diskdb.loadCollections(collection)[collection[0]].collectionName, collection[0], 'Loading single collection');
+        //load multiple collections
         test.equal(diskdb.loadCollections(collections)[collections[0]].collectionName, collections[0], 'Loading multiple collection');
         test.equal(diskdb.loadCollections(collections)[collections[1]].collectionName, collections[1], 'Loading multiple collection');
         test.done();
@@ -77,7 +78,7 @@ exports.count = {
         }
         // init diskdb
         diskdb.connect(dbPath, collection);
-        // delete all collections
+        // remove articles collection
         diskdb.articles.remove();
         //reinit the collection
         diskdb.loadCollections(collection);
@@ -102,7 +103,7 @@ exports.saveData = {
         }
         // init diskdb
         diskdb.connect(dbPath, collection);
-        // delete all collections
+        // remove articles collection
         diskdb.articles.remove();
         //reinit the collection
         diskdb.loadCollections(collection);
@@ -133,7 +134,7 @@ exports.findAll = {
         }
         // init diskdb
         diskdb.connect(dbPath, collection);
-        // delete all collections
+        // remove articles collection
         diskdb.articles.remove();
         //reinit the collection
         diskdb.loadCollections(collection);
@@ -146,11 +147,11 @@ exports.findAll = {
         diskdb.articles.save(article);
         diskdb.articles.save(article2);
 
-        test.equal(diskdb.articles.find().length, 2, 'Should find two record');
+        test.equal(diskdb.articles.find().length, 2, 'Should find two records');
         // find with a query
         test.equal(diskdb.articles.find({
             title: 'diskDB rocks'
-        }).length, 2, 'Should find two record on query');
+        }).length, 2, 'Should find two records with query');
         // no record should be returned when the query does not match any records
         test.equal(diskdb.articles.find({
             title: 'dummy text'
@@ -168,7 +169,7 @@ exports.findOne = {
         }
         // init diskdb
         diskdb.connect(dbPath, collection);
-        // delete all collections
+        // remove articles collection
         diskdb.articles.remove();
         //reinit the collection
         diskdb.loadCollections(collection);
@@ -204,7 +205,7 @@ exports.update = {
         }
         // init diskdb
         diskdb.connect(dbPath, collection);
-        // delete all collections
+        // remove articles collection
         diskdb.articles.remove();
         //reinit the collection
         diskdb.loadCollections(collection);
@@ -221,7 +222,7 @@ exports.update = {
         };
 
         test.expect(4);
-        //save two record
+        //save one record
         diskdb.articles.save(article);
         // before update
         test.equal(diskdb.articles.findOne().published, article.published, 'Should return the same record as inserted');
@@ -239,6 +240,7 @@ exports.update = {
         // should insert
         test.equal(diskdb.articles.update(query, article2, options).inserted, 1, 'Should return the inserted objects count');
 
+        //change options
         query = {
             published: 'yesterday'
         };
@@ -262,7 +264,7 @@ exports.remove = {
         }
         // init diskdb
         diskdb.connect(dbPath, collection);
-        // delete all collections
+        // remove articles collection
         diskdb.articles.remove();
         //reinit the collection
         diskdb.loadCollections(collection);
