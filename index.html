@@ -20,6 +20,8 @@
         <p class="header">A Lightweight Disk based JSON Database with a MongoDB like API for Node</p>
 
         <ul>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/arvindr21/diskDB/tarball/master">Download TAR</a></li>
           <li><a class="buttons github" href="https://github.com/arvindr21/diskDB">View On GitHub</a></li>
         </ul>
 
@@ -286,24 +288,34 @@
 <h3>
 <a name="remove-collection" class="anchor" href="#remove-collection"><span class="octicon octicon-link"></span></a>Remove Collection</h3>
 
-<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">query</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collectioName</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">multi</span><span class="p">);</span>
 </pre></div>
 
-<p>You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query.</p>
+<p>You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query. When you pass a query, you can either delete all the matched objects or only the first one by passing <code>multi</code> as <code>false</code>. The default value of <code>multi</code> is <code>true</code>.</p>
 
 <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">});</span>
 </pre></div>
 
-<p>Will remove only the matched objects, where as </p>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">},</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// remove all matched. Default - multi = true</span>
+</pre></div>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="s2">"5 stars"</span><span class="p">},</span> <span class="kc">false</span><span class="p">);</span> <span class="c1">// remove only the first match</span>
+</pre></div>
+
+<p>Using remove without any params will delete the file and remove the db instance.</p>
 
 <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'diskdb'</span><span class="p">);</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'/examples/db'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'articles'</span><span class="p">]);</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
 </pre></div>
 
-<p>Will remove the file from folder.</p>
+<p>After the above operation <code>db.articles</code> is <code>undefined</code>.</p>
 
 <h3>
 <a name="count" class="anchor" href="#count"><span class="octicon octicon-link"></span></a>Count</h3>
