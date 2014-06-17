@@ -272,19 +272,44 @@ exports.remove = {
     },
 
     'remove : ': function(test) {
-        test.expect(5);
+        test.expect(9);
         //save two record
+        diskdb.articles.save(article);
         diskdb.articles.save(article);
         diskdb.articles.save(article2);
 
+
         //before deletion
-        test.equal(diskdb.articles.count(), 2, 'There should be 2 records in the collection');
-        //deletion
+        test.equal(diskdb.articles.count(), 3, 'There should be 3 records in the collection');
+        //deletion -- default true
         test.equal(diskdb.articles.remove({
             'published': 'today'
         }), true, 'Deletion should be successful');
         //after deletion
         test.equal(diskdb.articles.count(), 1, 'There should be 1 record in the collection');
+        
+        //repopulate data
+        diskdb.articles.save(article);
+        diskdb.articles.save(article);
+
+        //deletion -- default true
+        test.equal(diskdb.articles.remove({
+            'published': 'today'
+        }, true), true, 'Deletion should be successful');
+        //after deletion
+        test.equal(diskdb.articles.count(), 1, 'There should be 1 record in the collection');
+
+        //repopulate data
+        diskdb.articles.save(article);
+        diskdb.articles.save(article);
+
+        //deletion -- default true
+        test.equal(diskdb.articles.remove({
+            'published': 'today'
+        }, false), true, 'Deletion should be successful');
+        //after deletion
+        test.equal(diskdb.articles.count(), 2, 'There should be 2 records in the collection');
+        
         //remove the collection completely
         test.equal(diskdb.articles.remove(), true, 'Deletion should be successful');
         //the collection should not exist any more

@@ -230,14 +230,25 @@ console.log(updated); // { updated: 1, inserted: 0 }
 
 ### Remove Collection
 ```js
-db.collectioName.remove(query);
+db.collectioName.remove(query, multi);
 ```
-You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query.
+You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query. When you pass a query, you can either delete all the matched objects or only the first one by passing `multi` as `false`. The default value of `multi` is `true`.
 
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.remove({rating : "5 stars"});
+```
+```js
+var db = require('diskdb');
+db.connect('/examples/db', ['articles']);
+db.articles.remove({rating : "5 stars"}, true); // remove all matched. Default - multi = true
+```
+
+```js
+var db = require('diskdb');
+db.connect('/examples/db', ['articles']);
+db.articles.remove({rating : "5 stars"}, false); // remove only the first match
 ```
 Will remove only the matched objects, where as 
 ```js
