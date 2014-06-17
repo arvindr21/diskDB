@@ -250,7 +250,7 @@ var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.remove({rating : "5 stars"}, false); // remove only the first match
 ```
-Using remove without any params will delete the file and remove the db instance.
+Using remove without any params will delete the file and will remove the db instance.
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);

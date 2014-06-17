@@ -1,6 +1,6 @@
 {
   "name": "diskdb",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "main": "lib/diskdb.js",
   "description": "A Light Weight Disk based JSON Database with a MongoDB like API",
   "homepage": "http://arvindr21.github.io/diskDB",
@@ -37,8 +37,7 @@
   "dependencies": {
     "chalk": "^0.4.0",
     "node-uuid": "^1.4.1",
-    "merge": "^1.1.3",
-    "underscore": "^1.6.0"
+    "merge": "^1.1.3"
   },
   "scripts": {
     "test": "grunt"
