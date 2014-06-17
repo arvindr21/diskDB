@@ -250,13 +250,13 @@ var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.remove({rating : "5 stars"}, false); // remove only the first match
 ```
-Will remove only the matched objects, where as 
+Using remove without any params will delete the file and remove the db instance.
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.remove();
 ```
-Will remove the file from folder.
+After the above operation `db.articles` is `undefined`.
 
 ### Count
 ```js
