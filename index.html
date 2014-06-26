@@ -93,7 +93,15 @@
 <p>This will check for a directory at given path, if it does not exits, diskDB will throw an error and exit. </p>
 
 <p>If the directory exists but the file/collection does not exist, diskDB will create it for you. </p>
+<p><strong>Note</strong> : If you have manually created an empty JSON file, please make sure that it contains at least an empty array.</p>
+<pre><code class="lang-js">[]
+</code></pre>
+<p>Else it will throw an error like</p>
+<pre><code class="lang-bash">undefined:<span class="hljs-number">0</span>
 
+^
+SyntaxError: Unexpected end of input
+</code></pre>
 <h3>
 <a name="load-collections" class="anchor" href="#load-collections"><span class="octicon octicon-link"></span></a>Load Collections</h3>
 
