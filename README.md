@@ -194,7 +194,8 @@ db.articles.find({rating : "5 stars"});
 ```
 This will return all the articles which have a rating of 5. 
 
-You can use find to search Nested JSON too.
+Nested JSON : 
+
 ```js
 var articleComments = {
     title: 'diskDB rocks',
@@ -214,13 +215,11 @@ var articleComments = {
     }]
 }
 ```
-diskDB can search upto `n` levels 
-
 ```js
 var savedArticle = db.articles.save([articleComments);
 foundArticles = db.articles.find({rating : 2});
 ```
-Since diskDB is mostly for light weight operations, avoid nested structures and huge datasets.
+Since diskDB is mostly for light weight data storage, avoid nested structures and huge datasets.
 
 #### db.collectioName.findOne(query)
 ```js
