@@ -239,7 +239,29 @@ SyntaxError: Unexpected end of input
 </pre></div>
 
 <p>This will return all the articles which have a rating of 5.</p>
-
+<p>Nested JSON : </p>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">articleComments</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="s1">'diskDB rocks'</span><span class="p">,</span>
+    <span class="nx">published</span><span class="o">:</span> <span class="s1">'2 days ago'</span><span class="p">,</span>
+    <span class="nx">comments</span><span class="o">:</span> <span class="p">[{</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s1">'a user'</span><span class="p">,</span>
+        <span class="nx">comment</span><span class="o">:</span> <span class="s1">'this is cool'</span><span class="p">,</span>
+        <span class="nx">rating</span><span class="o">:</span> <span class="mi">2</span>
+    <span class="p">},</span> <span class="p">{</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s1">'b user'</span><span class="p">,</span>
+        <span class="nx">comment</span><span class="o">:</span> <span class="s1">'this is ratchet'</span><span class="p">,</span>
+        <span class="nx">rating</span><span class="o">:</span> <span class="mi">3</span>
+    <span class="p">},</span> <span class="p">{</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s1">'c user'</span><span class="p">,</span>
+        <span class="nx">comment</span><span class="o">:</span> <span class="s1">'this is awesome'</span><span class="p">,</span>
+        <span class="nx">rating</span><span class="o">:</span> <span class="mi">2</span>
+    <span class="p">}]</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">savedArticle</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">save</span><span class="p">([</span><span class="nx">articleComments</span><span class="p">);</span>
+<span class="nx">foundArticles</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">rating</span> <span class="o">:</span> <span class="mi">2</span><span class="p">});</span>
+</pre></div>
+<p>Since diskDB is mostly for light weight data storage, avoid nested structures and huge datasets.</p>
 <h4>
 <a name="dbcollectionamefindonequery" class="anchor" href="#dbcollectionamefindonequery"><span class="octicon octicon-link"></span></a>db.collectioName.findOne(query)</h4>
 
@@ -349,8 +371,7 @@ SyntaxError: Unexpected end of input
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>node performance/time.js
 </pre></div>
 
-<p>An average of few tests can be found below</p>
-
+<p>An average of few tests (run on OS X - 10.9.3 | 2.9GHZ i7 | 8GB 1600MHz DDR3) can be found below</p>
 <h4>
 <a name="time-taken-to-process-x-number-of-objects-in-ms-vs-action-performed" class="anchor" href="#time-taken-to-process-x-number-of-objects-in-ms-vs-action-performed"><span class="octicon octicon-link"></span></a>Time taken to process x number of objects (in ms) vs Action Performed</h4>
 
