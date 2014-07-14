@@ -7,7 +7,7 @@ db.articles.remove();
 // reload collection
 db.loadCollections(['articles']);
 
-var x = 1;
+var x = 999;
 var articles = [];
 for (var i = 0; i < x; i++) {
     articles.push({

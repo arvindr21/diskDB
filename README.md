@@ -192,7 +192,35 @@ var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.find({rating : "5 stars"});
 ```
-This will return all the articles which have a rating of 5.
+This will return all the articles which have a rating of 5. 
+
+You can use find to search Nested JSON too.
+```js
+var articleComments = {
+    title: 'diskDB rocks',
+    published: '2 days ago',
+    comments: [{
+        name: 'a user',
+        comment: 'this is cool',
+        rating: 2
+    }, {
+        name: 'b user',
+        comment: 'this is ratchet',
+        rating: 3
+    }, {
+        name: 'c user',
+        comment: 'this is awesome',
+        rating: 2
+    }]
+}
+```
+diskDB can search upto `n` levels 
+
+```js
+var savedArticle = db.articles.save([articleComments);
+foundArticles = db.articles.find({rating : 2});
+```
+Since diskDB is mostly for light weight operations, avoid nested structures and huge datasets.
 
 #### db.collectioName.findOne(query)
 ```js
@@ -201,7 +229,7 @@ db.connect('/examples/db', ['articles']);
 db.articles.findOne();
 ```
 
-If you do not pass a query, diskDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data
+If you do not pass a query, diskDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data. 
 
 ```js
 var db = require('diskdb');
@@ -292,7 +320,7 @@ To validate diskDB's performance and to check if it meets your needs, you can cl
 ```bash
 $ node performance/time.js
 ```
-An average of few tests can be found below
+An average of few tests (run on OS X - 10.9.3 | 2.9GHZ i7 | 8GB 1600MHz DDR3) can be found below
 
 #### Time taken to process x number of objects (in ms) vs Action Performed
 
@@ -398,6 +426,7 @@ See the [CONTRIBUTING Guidelines](https://github.com/arvindr21/diskDB/blob/maste
     * Access a Collection/File
     * Create Read Update Delete on JSON object
     * Minor fixes and tests
+    * Performance improvements
 
 ## License
 Copyright (c) 2014 Arvind Ravulavaru. Licensed under the MIT license.

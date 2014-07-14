@@ -33,6 +33,63 @@ var dbPath = 'test/testdb',
     article2 = {
         title: 'diskDB rocks',
         published: 'yesterday'
+    },
+    //nested objects
+    articleComments = {
+        title: 'diskDB rocks',
+        published: '2 days ago',
+        comments: [{
+            name: 'a user',
+            comment: 'this is cool',
+            rating: 2
+        }, {
+            name: 'b user',
+            comment: 'this is ratchet',
+            rating: 3
+        }, {
+            name: 'c user',
+            comment: 'this is awesome',
+            rating: 2
+        }]
+    },
+    articleComments2 = {
+        title: 'diskDB rocks again',
+        published: '3 days ago',
+        comments: [{
+            name: 'a user',
+            comment: 'this is cool',
+            rating: 1
+        }, {
+            name: 'b user',
+            comment: 'this is ratchet',
+            rating: 1
+        }, {
+            name: 'c user',
+            comment: 'this is awesome',
+            rating: 2
+        }]
+    },
+    articleCommentsL3 = {
+        title: 'diskDB rocks again',
+        published: '3 days ago',
+        comments: [{
+            name: 'a user',
+            comment: 'this is cool',
+            rating: 2,
+            comments: [{
+                name: 'd user',
+                comment: 'A reply',
+                rating: 1
+            }]
+        }, {
+            name: 'b user',
+            comment: 'this is ratchet',
+            rating: 2
+        }, {
+            name: 'c user',
+            comment: 'this is awesome',
+            rating: 2
+        }]
     };
 
 exports.connectNload = {
@@ -159,6 +216,42 @@ exports.findAll = {
 
         test.done();
     },
+
+    'findAllNested : ': function(test) {
+        test.expect(6);
+        //save two records
+        diskdb.articles.save(articleComments);
+        diskdb.articles.save(articleComments2);
+
+        // no query
+        test.equal(diskdb.articles.find().length, 2, 'Should find two records');
+
+        // find with a query
+        test.equal(diskdb.articles.find({
+            rating: 2
+        }).length, 2, 'Should find two records with query');
+
+        // find with a query
+        test.equal(diskdb.articles.find({
+            rating: 1
+        }).length, 1, 'Should find one records with query');
+
+        // no record should be returned when the query does not match any records
+        test.equal(diskdb.articles.find({
+            name: 'dummy text'
+        }).length, 0, 'Should find no records');
+
+        // check 3 level deep 
+        diskdb.articles.save(articleCommentsL3);
+        // no query
+        test.equal(diskdb.articles.find().length, 3, 'Should find three records');
+
+        test.equal(diskdb.articles.find({
+            rating: 1
+        }).length, 2, 'Should find two records with query');
+
+        test.done();
+    },
 };
 
 exports.findOne = {
@@ -191,6 +284,30 @@ exports.findOne = {
         // no record should be returned when the query does not match any records
         test.equal(diskdb.articles.find({
             title: 'dummy text'
+        }).title, undefined, 'No records should be found');
+
+        test.done();
+    },
+
+    'findOneNested : ': function(test) {
+        test.expect(3);
+        //save two record
+        diskdb.articles.save(article);
+        diskdb.articles.save(article2);
+        diskdb.articles.save(articleComments);
+        diskdb.articles.save(articleComments2);
+        diskdb.articles.save(articleCommentsL3);
+
+        test.equal(diskdb.articles.findOne().published, 'today', 'Should return the first record');
+        
+        // find with a query
+        test.equal(diskdb.articles.findOne({
+            rating: 1
+        }).title, 'diskDB rocks again', 'Should find One record on query get the title of the object');
+
+        // no record should be returned when the query does not match any records
+        test.equal(diskdb.articles.find({
+            rating: 0
         }).title, undefined, 'No records should be found');
 
         test.done();
@@ -287,7 +404,7 @@ exports.remove = {
         }), true, 'Deletion should be successful');
         //after deletion
         test.equal(diskdb.articles.count(), 1, 'There should be 1 record in the collection');
-        
+
         //repopulate data
         diskdb.articles.save(article);
         diskdb.articles.save(article);
@@ -309,7 +426,7 @@ exports.remove = {
         }, false), true, 'Deletion should be successful');
         //after deletion
         test.equal(diskdb.articles.count(), 2, 'There should be 2 records in the collection');
-        
+
         //remove the collection completely
         test.equal(diskdb.articles.remove(), true, 'Deletion should be successful');
         //the collection should not exist any more
