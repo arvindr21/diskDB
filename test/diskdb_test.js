@@ -241,7 +241,7 @@ exports.findAll = {
             name: 'dummy text'
         }).length, 0, 'Should find no records');
 
-        // check 3 level deep 
+        // check 3 level deep
         diskdb.articles.save(articleCommentsL3);
         // no query
         test.equal(diskdb.articles.find().length, 3, 'Should find three records');
@@ -299,7 +299,7 @@ exports.findOne = {
         diskdb.articles.save(articleCommentsL3);
 
         test.equal(diskdb.articles.findOne().published, 'today', 'Should return the first record');
-        
+
         // find with a query
         test.equal(diskdb.articles.findOne({
             rating: 1
