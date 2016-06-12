@@ -172,7 +172,7 @@ There are 2 methods available for reading the JSON collection
 * db.collectioName.findOne(query)
 
 
-#### db.collectioName.find() 
+#### db.collectionName.find() 
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
