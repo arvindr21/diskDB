@@ -195,6 +195,14 @@ db.articles.find({rating : "5 stars"});
 ```
 This will return all the articles which have a rating of 5. 
 
+Find can take multiple criteria
+```js
+var db = require('diskdb');
+db.connect('/examples/db', ['articles']);
+db.articles.find({rating : "5 stars", published: "yesterday"});
+```
+This will return all the articles with a rating of 5, published yesterday.
+
 Nested JSON : 
 
 ```js
