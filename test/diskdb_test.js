@@ -199,7 +199,7 @@ exports.findAll = {
     },
 
     'findAll : ': function(test) {
-        test.expect(3);
+        test.expect(4);
         //save two record
         diskdb.articles.save(article);
         diskdb.articles.save(article2);
@@ -213,6 +213,11 @@ exports.findAll = {
         test.equal(diskdb.articles.find({
             title: 'dummy text'
         }).length, 0, 'Should find no records');
+
+        test.equal(diskdb.articles.find({
+          title: 'diskDB rocks',
+          published: 'yesterday'
+        }).length, 1, 'Should find one record');
 
         test.done();
     },
