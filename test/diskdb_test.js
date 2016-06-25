@@ -199,7 +199,7 @@ exports.findAll = {
     },
 
     'findAll : ': function(test) {
-        test.expect(3);
+        test.expect(4);
         //save two record
         diskdb.articles.save(article);
         diskdb.articles.save(article2);
@@ -213,6 +213,11 @@ exports.findAll = {
         test.equal(diskdb.articles.find({
             title: 'dummy text'
         }).length, 0, 'Should find no records');
+
+        test.equal(diskdb.articles.find({
+          title: 'diskDB rocks',
+          published: 'yesterday'
+        }).length, 1, 'Should find one record');
 
         test.done();
     },
@@ -241,7 +246,7 @@ exports.findAll = {
             name: 'dummy text'
         }).length, 0, 'Should find no records');
 
-        // check 3 level deep 
+        // check 3 level deep
         diskdb.articles.save(articleCommentsL3);
         // no query
         test.equal(diskdb.articles.find().length, 3, 'Should find three records');
@@ -299,7 +304,7 @@ exports.findOne = {
         diskdb.articles.save(articleCommentsL3);
 
         test.equal(diskdb.articles.findOne().published, 'today', 'Should return the first record');
-        
+
         // find with a query
         test.equal(diskdb.articles.findOne({
             rating: 1
