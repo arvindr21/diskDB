@@ -1,5 +1,4 @@
-# diskDB [![Build Status](https://secure.travis-ci.org/arvindr21/diskDB.png?branch=master)](https://travis-ci.org/arvindr21/diskDB) [![NPM version](https://badge-me.herokuapp.com/api/npm/diskdb.png)](http://badges.enytc.com/for/npm/diskdb) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/arvindr21/diskdb/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arvindr21/diskDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# diskDB [![Build Status](https://secure.travis-ci.org/arvindr21/diskDB.png?branch=master)](https://travis-ci.org/arvindr21/diskDB) [![NPM version](https://badge-me.herokuapp.com/api/npm/diskdb.png)](http://badges.enytc.com/for/npm/diskdb) [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arvindr21/diskDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![NPM](https://nodei.co/npm/diskdb.png?downloads=true&stars=true)](https://nodei.co/npm/diskdb/)
 
@@ -307,6 +306,7 @@ db.connect('/examples/db', ['articles']);
 db.articles.remove();
 ```
 After the above operation `db.articles` is `undefined`.
+
 ---
 ### Count
 ```js
