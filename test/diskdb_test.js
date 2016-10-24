@@ -34,6 +34,10 @@ var dbPath = 'test/testdb',
         title: 'diskDB rocks',
         published: 'yesterday'
     },
+    article3 = {
+        title: 'diskDB rocks',
+        published: 'yesterday'
+    },
     //nested objects
     articleComments = {
         title: 'diskDB rocks',
@@ -199,25 +203,37 @@ exports.findAll = {
     },
 
     'findAll : ': function(test) {
-        test.expect(4);
-        //save two record
+        test.expect(5);
+
+        // save three records
         diskdb.articles.save(article);
         diskdb.articles.save(article2);
+        diskdb.articles.save(article3);
 
-        test.equal(diskdb.articles.find().length, 2, 'Should find two records');
+        // empty find returns all records
+        test.equal(diskdb.articles.find().length, 3, 'Should find three records');
+
         // find with a query
         test.equal(diskdb.articles.find({
             title: 'diskDB rocks'
-        }).length, 2, 'Should find two records with query');
+        }).length, 3, 'Should find three records with query');
+
         // no record should be returned when the query does not match any records
         test.equal(diskdb.articles.find({
             title: 'dummy text'
         }).length, 0, 'Should find no records');
 
+        // multiple search criteria matching one record
+        test.equal(diskdb.articles.find({
+          title: 'diskDB rocks',
+          published: 'today'
+        }).length, 1, 'Should find one record');
+
+        // multiple search criteria matching two records
         test.equal(diskdb.articles.find({
           title: 'diskDB rocks',
           published: 'yesterday'
-        }).length, 1, 'Should find one record');
+        }).length, 2, 'Should find two records');
 
         test.done();
     },
