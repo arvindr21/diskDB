@@ -1,5 +1,4 @@
-# diskDB [![Build Status](https://secure.travis-ci.org/arvindr21/diskDB.png?branch=master)](https://travis-ci.org/arvindr21/diskDB) [![NPM version](https://badge-me.herokuapp.com/api/npm/diskdb.png)](http://badges.enytc.com/for/npm/diskdb) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/arvindr21/diskdb/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arvindr21/diskDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# diskDB [![Build Status](https://secure.travis-ci.org/arvindr21/diskDB.png?branch=master)](https://travis-ci.org/arvindr21/diskDB) [![NPM version](https://badge-me.herokuapp.com/api/npm/diskdb.png)](http://badges.enytc.com/for/npm/diskdb) [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/arvindr21/diskDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![NPM](https://nodei.co/npm/diskdb.png?downloads=true&stars=true)](https://nodei.co/npm/diskdb/)
 
@@ -7,7 +6,7 @@ A Lightweight Disk based JSON Database with a MongoDB like API for Node.
 
 _You will never know that you are interacting with a File System_
 
-##Contents
+## Contents
 
 * [Getting Started](#getting-started)
 * [Documentation](#documentation)
@@ -49,9 +48,9 @@ db = db.connect('/examples/db', ['articles']);
 db.connect('/examples/db', ['articles']);
 ```
 
-This will check for a directory at given path, if it does not exits, diskDB will throw an error and exit. 
+This will check for a directory at given path, if it does not exits, diskDB will throw an error and exit.
 
-If the directory exists but the file/collection does not exist, diskDB will create it for you. 
+If the directory exists but the file/collection does not exist, diskDB will create it for you.
 
 **Note** : If you have manually created an empty JSON file, please make sure that it contains at least an empty array.
 
@@ -66,9 +65,9 @@ undefined:0
 ^
 SyntaxError: Unexpected end of input
 ```
-
-### Load Collections 
-Alternatively you can also load collections like 
+---
+### Load Collections
+Alternatively you can also load collections like
 
 ```js
 var db = require('diskdb');
@@ -90,11 +89,10 @@ db.connect('/examples/db', ['articles']);
 var db = require('diskdb');
 db.connect('/examples/db', ['articles','comments','users']);
 ```
-
-
+---
 ### Write/Save to Collection
 ```js
-db.collectioName.save(object);
+db.collectionName.save(object);
 ```
 Once you have loaded a collection, you can access the collection's methods using the dot notation like
 
@@ -114,7 +112,7 @@ db.articles.save(article);
 // or
 db.articles.save([article]);
 ```
-The saved data will be 
+The saved data will be
 ```js
 [
     {
@@ -165,14 +163,14 @@ And this will return the inserted objects
     rating: '5 stars',
     _id: '4ca1c1597ddc4020bc41b4418e7a568e' } ]
 ```
-
+---
 ### Read from Collection
 There are 2 methods available for reading the JSON collection
-* db.collectioName.find(query)
-* db.collectioName.findOne(query)
+* db.collectionName.find(query)
+* db.collectionName.findOne(query)
 
 
-#### db.collectionName.find() 
+#### db.collectionName.find()
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
@@ -180,11 +178,11 @@ db.articles.find();
 ```
 This will return all the records
 ```js
-[{ 
+[{
     title: 'diskDB rocks',
     published: 'today',
     rating: '5 stars',
-    _id: '0f6047c6c69149f0be0c8f5943be91be' 
+    _id: '0f6047c6c69149f0be0c8f5943be91be'
 }]
 ```
 You can also query with a criteria like
@@ -193,7 +191,7 @@ var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.find({rating : "5 stars"});
 ```
-This will return all the articles which have a rating of 5. 
+This will return all the articles which have a rating of 5.
 
 Find can take multiple criteria
 ```js
@@ -203,7 +201,7 @@ db.articles.find({rating : "5 stars", published: "yesterday"});
 ```
 This will return all the articles with a rating of 5, published yesterday.
 
-Nested JSON : 
+Nested JSON :
 
 ```js
 var articleComments = {
@@ -230,23 +228,24 @@ foundArticles = db.articles.find({rating : 2});
 ```
 Since diskDB is mostly for light weight data storage, avoid nested structures and huge datasets.
 
-#### db.collectioName.findOne(query)
+#### db.collectionName.findOne(query)
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.findOne();
 ```
 
-If you do not pass a query, diskDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data. 
+If you do not pass a query, diskDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data.
 
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
 db.articles.findOne({_id: '0f6047c6c69149f0be0c8f5943be91be'});
 ```
+---
 ### Update Collection
 ```js
-db.collectioName.update(query, data, options);
+db.collectionName.update(query, data, options);
 ```
 
 You can also update one or many objects in the collection
@@ -256,7 +255,7 @@ options = {
     upsert: false // if object is not found, add it (update-insert) - default false
 }
 ```
-Usage 
+Usage
 ```js
 var db = require('diskdb');
 db.connect('/examples/db', ['articles']);
@@ -277,10 +276,10 @@ var options = {
 var updated = db.articles.update(query, dataToBeUpdate, options);
 console.log(updated); // { updated: 1, inserted: 0 }
 ```
-
+---
 ### Remove Collection
 ```js
-db.collectioName.remove(query, multi);
+db.collectionName.remove(query, multi);
 ```
 You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query. When you pass a query, you can either delete all the matched objects or only the first one by passing `multi` as `false`. The default value of `multi` is `true`.
 
@@ -308,9 +307,10 @@ db.articles.remove();
 ```
 After the above operation `db.articles` is `undefined`.
 
+---
 ### Count
 ```js
-db.collectioName.count();
+db.collectionName.count();
 ```
 Will return the count of objects in the Collection
 ```js
@@ -332,96 +332,18 @@ An average of few tests (run on OS X - 10.9.3 | 2.9GHZ i7 | 8GB 1600MHz DDR3) ca
 
 #### Time taken to process x number of objects (in ms) vs Action Performed
 
-<table>
-    <tr>
-        <td></td>
-        <td>1 (object)</td>
-        <td>1000 (objects)</td>
-        <td>10000 (objects)</td>
-        <td>100000 (objects)</td>
-        <td>1000000 (objects)</td>
-    </tr>
-    <tr>
-        <td>Save</td>
-        <td>1 (ms)</td>
-        <td>15 (ms)</td>
-        <td>137 (ms)</td>
-        <td>1782 (ms)</td>
-        <td>14425 (ms)</td>
-    </tr>
-    <tr>
-        <td>Find all without query</td>
-        <td>0 (ms)</td>
-        <td>2 (ms)</td>
-        <td>12 (ms)</td>
-        <td>204 (ms)</td>
-        <td>2923 (ms)</td>
-    </tr>
-    <tr>
-        <td>Find all with query</td>
-        <td>0 (ms)</td>
-        <td>2 (ms)</td>
-        <td>17 (ms)</td>
-        <td>738 (ms)</td>
-        <td>1985 (ms)</td>
-    </tr>
-    <tr>
-        <td>Find one without query</td>
-        <td>0 (ms)</td>
-        <td>1 (ms)</td>
-        <td>9 (ms)</td>
-        <td>791 (ms)</td>
-        <td>1676 (ms)</td>
-    </tr>
-    <tr>
-        <td>Find one with query</td>
-        <td>0 (ms)</td>
-        <td>1 (ms)</td>
-        <td>8 (ms)</td>
-        <td>219 (ms)</td>
-        <td>1410 (ms)</td>
-    </tr>
-    <tr>
-        <td>Update all records</td>
-        <td>1 (ms)</td>
-        <td>7 (ms)</td>
-        <td>61 (ms)</td>
-        <td>206 (ms)</td>
-        <td>48035 (ms)</td>
-    </tr>
-    <tr>
-        <td>Get count</td>
-        <td>0 (ms)</td>
-        <td>3 (ms)</td>
-        <td>11 (ms)</td>
-        <td>260 (ms)</td>
-        <td>2420 (ms)</td>
-    </tr>
-    <tr>
-        <td>Remove with query</td>
-        <td>0 (ms)</td>
-        <td>7 (ms)</td>
-        <td>59 (ms)</td>
-        <td>984 (ms)</td>
-        <td>48191 (ms)</td>
-    </tr>
-    <tr>
-        <td>Remove collection</td>
-        <td>0 (ms)</td>
-        <td>1 (ms)</td>
-        <td>4 (ms)</td>
-        <td>52 (ms)</td>
-        <td>154 (ms)</td>
-    </tr>
-    <tr>
-        <td>File size</td>
-        <td>0.000111 (MB)</td>
-        <td>0.116671 (MB)</td>
-        <td>1.196671 (MB)</td>
-        <td>12.266671 (MB)</td>
-        <td>125.666671 (MB)</td>
-    </tr>
-</table>
+\# of objects          | 1          | 1000       | 10000      | 100000     | 1000000
+-----------------------|------------|------------|------------|------------|-------------
+Save                   | 1 ms       | 15 ms      | 137 ms     | 1728 ms    | 14425 ms   
+Find all without query | 0 ms       | 2 ms       | 12 ms      | 204 ms     | 2923 ms    
+Find all with query    | 0 ms       | 2 ms       | 17 ms      | 738 ms     | 1985 ms    
+Find one without query | 0 ms       | 1 ms       | 9 ms       | 791 ms     | 1676 ms    
+Find one with query    | 0 ms       | 1 ms       | 8 ms       | 219 ms     | 1410 ms    
+Update all records     | 1 ms       | 7 ms       | 61 ms      | 206 ms     | 48035 ms   
+Get count              | 0 ms       | 3 ms       | 11 ms      | 260 ms     | 2420 ms    
+Remove with query      | 0 ms       | 7 ms       | 59 ms      | 984 ms     | 48191 ms   
+Remove collection      | 0 ms       | 1 ms       | 4 ms       | 52 ms      | 154 ms     
+File size              | 0.000111 MB| 0.116671 MB| 1.196671 MB| 12.26667 MB| 125.66667 MB
 
 
 ## Contributing
