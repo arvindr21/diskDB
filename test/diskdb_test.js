@@ -203,7 +203,7 @@ exports.findAll = {
     },
 
     'findAll : ': function(test) {
-        test.expect(5);
+        test.expect(6);
 
         // save three records
         diskdb.articles.save(article);
@@ -212,6 +212,9 @@ exports.findAll = {
 
         // empty find returns all records
         test.equal(diskdb.articles.find().length, 3, 'Should find three records');
+
+        // empty search params returns all records
+        test.equal(diskdb.articles.find({}).length, 3, 'Should find three records');
 
         // find with a query
         test.equal(diskdb.articles.find({
