@@ -1,6 +1,6 @@
 {
   "name": "diskdb",
-  "version": "0.1.14",
+  "version": "0.1.17",
   "main": "lib/diskdb.js",
   "description": "A Lightweight Disk based JSON Database with a MongoDB like API",
   "homepage": "http://arvindr21.github.io/diskDB",
