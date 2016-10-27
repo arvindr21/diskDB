@@ -1,7 +1,9 @@
 // Check the processing time for each of the DB operations with load 
 var db = require('../lib/diskdb.js');
 var fs = require('fs');
-db.connect('db', ['articles']);
+
+var path = process.cwd();
+db.connect(path + '/performance/db', ['articles']);
 // remove the articles JSON if exists
 db.articles.remove();
 // reload collection
@@ -80,6 +82,5 @@ function getFilesizeInBytes(filename) {
     var fileSizeInBytes = stats['size'] / 1000000.0;
     return fileSizeInBytes + ' MB'
 }
-
 
 // run node time.js
