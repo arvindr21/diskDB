@@ -123,7 +123,7 @@ exports.connectNload = {
         test.equal(diskdb.loadCollections(collections)[collections[1]].collectionName, collections[1], 'Loading multiple collection');
         test.done();
     },
-    'loadCollectionsWhenFileIsEmpty : ': function(test) {
+    'loadCollectionsWhenFileIsInvalid : ': function(test) {
         test.expect(1);
         // connect to DB
         diskdb.connect(dbPath);
