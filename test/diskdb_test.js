@@ -1,6 +1,7 @@
 'use strict';
 
 var diskdb = require('../lib/diskdb.js');
+var path = require('path');
 var fs = require('fs');
 
 /*
@@ -120,6 +121,16 @@ exports.connectNload = {
         //load multiple collections
         test.equal(diskdb.loadCollections(collections)[collections[0]].collectionName, collections[0], 'Loading multiple collection');
         test.equal(diskdb.loadCollections(collections)[collections[1]].collectionName, collections[1], 'Loading multiple collection');
+        test.done();
+    },
+    'loadCollectionsWhenFileIsInvalid : ': function(test) {
+        test.expect(1);
+        // connect to DB
+        diskdb.connect(dbPath);
+        // we manually create the file with an empty and/or invalid JSON content
+        fs.writeFileSync(path.join(dbPath, 'articles.json'), 'empty string or invalid json');
+        // we don't have an exception anymore...
+        test.deepEqual(diskdb.articles.find(), []);
         test.done();
     },
     tearDown: function(callback) {

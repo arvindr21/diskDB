@@ -52,7 +52,8 @@ This will check for a directory at given path, if it does not exits, diskDB will
 
 If the directory exists but the file/collection does not exist, diskDB will create it for you.
 
-**Note** : If you have manually created an empty JSON file, please make sure that it contains at least an empty array.
+**Note** : If you have manually created a JSON file, please make sure it contains a valid JSON array, otherwise diskDB
+will return an empty array.
 
 ```js
 []
