@@ -1,60 +1,86 @@
-/*
- * diskDB
- * http://arvindr21.github.io/diskDB
- *
- * Copyright (c) 2014 Arvind Ravulavaru
- * Licensed under the MIT license.
- */
-
 'use strict';
-//global modules
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var path = require('path'),
-    c = require('chalk'),
-    e = c.red,
-    s = c.green;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * diskDB
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * http://arvindr21.github.io/diskDB
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright (c) 2014 Arvind Ravulavaru
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Licensed under the MIT license.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+// global modules
+
 
 //local modules
-var util = require('./util');
 
-var db = {
-    connect: function connect(path, collections) {
-        if (util.isValidPath(path)) {
-            var _db = {};
-            _db.path = path;
-            this._db = _db;
-            console.log(s('Successfully connected to : ' + path));
-            if (collections) {
-                this.loadCollections(collections);
-            }
-        } else {
-            console.log(e('The DB Path [' + path + '] does not seem to be valid. Recheck the path and try again'));
-            return false;
+
+var _path = require('path');
+
+var _chalk = require('chalk');
+
+var _util = require('./util');
+
+var _collection = require('./collection');
+
+var _collection2 = _interopRequireDefault(_collection);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DiskDB = function () {
+  function DiskDB() {
+    _classCallCheck(this, DiskDB);
+  }
+
+  _createClass(DiskDB, [{
+    key: 'connect',
+    value: function connect(path, collections) {
+      if ((0, _util.isValidPath)(path)) {
+        this._db = { path: path };
+        console.log((0, _chalk.green)('Successfully connected to : ' + path));
+        if (collections) {
+          this.loadCollections(collections);
         }
-        return this;
-    },
-    loadCollections: function loadCollections(collections) {
-        if (!this._db) {
-            console.log(e('Initialize the DB before you add collections. Use : ', 'db.connect(\'path-to-db\');'));
-            return false;
-        }
-        if ((typeof collections === 'undefined' ? 'undefined' : _typeof(collections)) === 'object' && collections.length) {
-            for (var i = 0; i < collections.length; i++) {
-                var p = path.join(this._db.path, collections[i].indexOf('.json') >= 0 ? collections[i] : collections[i] + '.json');
-                if (!util.isValidPath(p)) {
-                    util.writeToFile(p);
-                }
-                var _c = collections[i].replace('.json', '');
-                this[_c] = new require('./collection')(this, _c);
-            }
-        } else {
-            console.log(e('Invalid Collections Array.', 'Expected Format : ', '[\'collection1\',\'collection2\',\'collection3\']'));
-        }
-        return this;
+      } else {
+        console.log((0, _chalk.red)('The DB Path [' + path + '] does not seem to be valid. Recheck the path and try again'));
+        return false;
+      }
+      return this;
     }
+  }, {
+    key: 'loadCollections',
+    value: function loadCollections(collections) {
+      var _this = this;
 
-};
+      if (!this._db) {
+        console.log((0, _chalk.red)('Initialize the DB before you add collections. Use : ', 'db.connect(\'path-to-db\');'));
+        return false;
+      }
+      if (Array.isArray(collections)) {
+        collections.forEach(function (collection) {
+          if (!collection.includes('.json')) {
+            collection = collection + '.json';
+          }
+          var collectionFile = (0, _path.join)(_this._db.path, collection);
+          if (!(0, _util.isValidPath)(collectionFile)) {
+            (0, _util.writeToFile)(collectionFile);
+          }
+          var collectionName = collection.replace('.json', '');
+          _this[collectionName] = new _collection2.default(_this, collectionName);
+        });
+      } else {
+        console.log((0, _chalk.red)('Invalid Collections Array.', 'Expected Format : ', '[\'collection1\',\'collection2\',\'collection3\']'));
+      }
+      return this;
+    }
+  }]);
 
-module.exports = db;
+  return DiskDB;
+}();
+
+exports.default = DiskDB;
