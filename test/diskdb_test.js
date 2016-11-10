@@ -1,6 +1,6 @@
 'use strict';
 
-var diskdb = require('../lib/diskdb.js');
+var diskdb = require('..');
 var path = require('path');
 var fs = require('fs');
 
