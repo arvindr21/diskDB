@@ -1,6 +1,6 @@
 'use strict';
 
-var DiskDB = new require('..').default;
+var DiskDB = require('..').default;
 var path = require('path');
 var fs = require('fs');
 

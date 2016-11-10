@@ -1,5 +1,6 @@
-// Check the processing time for each of the DB operations with load 
-var db = require('../lib/diskdb.js');
+'use strict';
+// Check the processing time for each of the DB operations with load
+var db = new (require('..').default)();
 var fs = require('fs');
 
 var path = process.cwd();
