@@ -127,7 +127,7 @@ exports.connectNload = {
         test.expect(1);
         // connect to DB
         diskdb.connect(dbPath);
-        // we manually create the file with an empty content
+        // we manually create the file with an empty and/or invalid JSON content
         fs.writeFileSync(path.join(dbPath, 'articles.json'), 'empty string or invalid json');
         // we don't have an exception anymore...
         test.deepEqual(diskdb.articles.find(), []);
