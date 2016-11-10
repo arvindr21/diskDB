@@ -1,8 +1,10 @@
+'use strict';
 // once you run npm install diskDB,
 // var db = require('diskdb'); instead of
-var db = require('../lib/diskdb.js');
+var DiskDB = require('..').default;
+var db = new DiskDB();
 
-db.connect('db', ['articles']);
+db.connect(`${__dirname}/db`, ['articles']);
 var article = {
     title : 'diskDB rocks',
     published : 'today',
@@ -47,7 +49,7 @@ console.log(updated);
 foundArticles = db.articles.findOne({rating : '5 stars'});
 console.log(foundArticles);
 
-//count 
+//count
 console.log(db.articles.count());
 
 //remove

@@ -1,6 +1,7 @@
 'use strict';
 // Check the processing time for each of the DB operations with load
-var db = new (require('..').default)();
+var DiskDB = require('..').default;
+var db = new DiskDB();
 var fs = require('fs');
 
 var path = process.cwd();

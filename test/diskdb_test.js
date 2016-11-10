@@ -4,7 +4,7 @@ var DiskDB = require('..').default;
 var path = require('path');
 var fs = require('fs');
 
-const diskdb = new DiskDB();
+var diskdb = new DiskDB();
 
 /*
   ======== A Handy Little Nodeunit Reference ========
