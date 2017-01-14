@@ -18,7 +18,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _path = require('path');
 
-var _nodeUuid = require('node-uuid');
+var _uuid = require('uuid');
 
 var _util = require('./util');
 
@@ -29,7 +29,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var UUID = function UUID() {
-  return (0, _nodeUuid.v4)().replace(/-/g, '');
+  return (0, _uuid.v4)().replace(/-/g, '');
 };
 
 var Collection = function () {
