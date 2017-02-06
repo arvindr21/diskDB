@@ -1,8 +1,10 @@
 'use strict';
 
-var diskdb = require('../lib/diskdb.js');
+var DiskDB = require('..').default;
 var path = require('path');
 var fs = require('fs');
+
+var diskdb = new DiskDB();
 
 /*
   ======== A Handy Little Nodeunit Reference ========

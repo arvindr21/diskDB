@@ -13,5 +13,6 @@
   "eqnull": true,
   "node": true,
   "browser": true,
-  "newcap": false
+  "newcap": false,
+  "esversion": 6
 }
