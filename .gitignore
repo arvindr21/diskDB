@@ -1,3 +1,9 @@
-/node_modules/
-npm-debug.log
-test/testdb/
+*-debug.log
+*-error.log
+/.nyc_output
+/dist
+/lib
+/tmp
+/yarn.lock
+node_modules
+.history
