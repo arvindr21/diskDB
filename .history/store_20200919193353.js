@@ -1,0 +1,8 @@
+class Store {
+
+    constructor(filePath) {
+
+    }
+
+
+}

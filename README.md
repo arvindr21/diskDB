@@ -1,73 +1,34 @@
-diskdb
-======
+[![Build Status](https://travis-ci.org/{{github-user-name}}/{{github-app-name}}.svg?branch=master)](https://travis-ci.org/{{github-user-name}}/{{github-app-name}}.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/{{github-user-name}}/{{github-app-name}}/badge.svg?branch=master)](https://coveralls.io/github/{{github-user-name}}/{{github-app-name}}?branch=master)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-A Lightweight Disk based JSON Database with a MongoDB like API
+# Using this module in other modules
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/diskdb.svg)](https://npmjs.org/package/diskdb)
-[![CircleCI](https://circleci.com/gh/arvindr21/diskdb/tree/master.svg?style=shield)](https://circleci.com/gh/arvindr21/diskdb/tree/master)
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/arvindr21/diskdb?branch=master&svg=true)](https://ci.appveyor.com/project/arvindr21/diskdb/branch/master)
-[![Codecov](https://codecov.io/gh/arvindr21/diskdb/branch/master/graph/badge.svg)](https://codecov.io/gh/arvindr21/diskdb)
-[![Downloads/week](https://img.shields.io/npm/dw/diskdb.svg)](https://npmjs.org/package/diskdb)
-[![License](https://img.shields.io/npm/l/diskdb.svg)](https://github.com/arvindr21/diskdb/blob/master/package.json)
+Here is a quick example of how this module can be used in other modules. The [TypeScript Module Resolution Logic](https://www.typescriptlang.org/docs/handbook/module-resolution.html) makes it quite easy. The file `src/index.ts` is a [barrel](https://basarat.gitbooks.io/typescript/content/docs/tips/barrel.html) that re-exports selected exports from other files. The _package.json_ file contains `main` attribute that points to the generated `lib/index.js` file and `typings` attribute that points to the generated `lib/index.d.ts` file.
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g diskdb
-$ diskdb COMMAND
-running command...
-$ diskdb (-v|--version|version)
-diskdb/0.2.1 darwin-x64 node-v12.18.3
-$ diskdb --help [COMMAND]
-USAGE
-  $ diskdb COMMAND
-...
-```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`diskdb hello [FILE]`](#diskdb-hello-file)
-* [`diskdb help [COMMAND]`](#diskdb-help-command)
+> If you are planning to have code in multiple files (which is quite natural for a NodeJS module) that users can import, make sure you update `src/index.ts` file appropriately.
 
-## `diskdb hello [FILE]`
+Now assuming you have published this amazing module to _npm_ with the name `my-amazing-lib`, and installed it in the module in which you need it -
 
-describe the command here
+- To use the `Greeter` class in a TypeScript file -
 
-```
-USAGE
-  $ diskdb hello [FILE]
+```ts
+import { Greeter } from "my-amazing-lib";
 
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ diskdb hello
-  hello world from ./src/hello.ts!
+const greeter = new Greeter("World!");
+greeter.greet();
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/arvindr21/diskdb/blob/v0.2.1/src/commands/hello.ts)_
+- To use the `Greeter` class in a JavaScript file -
 
-## `diskdb help [COMMAND]`
+```js
+const Greeter = require('my-amazing-lib').Greeter;
 
-display help for diskdb
-
-```
-USAGE
-  $ diskdb help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
-
-OPTIONS
-  --all  see all commands in CLI
+const greeter = new Greeter('World!');
+greeter.greet();
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
-<!-- commandsstop -->
+## Setting travis and coveralls badges
+1. Sign in to [travis](https://travis-ci.org/) and activate the build for your project.
+2. Sign in to [coveralls](https://coveralls.io/) and activate the build for your project.
+3. Replace {{github-user-name}}/{{github-app-name}} with your repo details like: "ospatil/generator-node-typescript".
