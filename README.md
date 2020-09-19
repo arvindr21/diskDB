@@ -22,7 +22,7 @@ $ npm install -g diskdb
 $ diskdb COMMAND
 running command...
 $ diskdb (-v|--version|version)
-diskdb/0.2.0 darwin-x64 node-v12.18.3
+diskdb/0.2.1 darwin-x64 node-v12.18.3
 $ diskdb --help [COMMAND]
 USAGE
   $ diskdb COMMAND
@@ -52,7 +52,7 @@ EXAMPLE
   hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/arvindr21/diskdb/blob/v0.2.0/src/commands/hello.ts)_
+_See code: [src/commands/hello.ts](https://github.com/arvindr21/diskdb/blob/v0.2.1/src/commands/hello.ts)_
 
 ## `diskdb help [COMMAND]`
 

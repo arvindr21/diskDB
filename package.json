@@ -1,7 +1,7 @@
 {
     "name": "diskdb",
     "description": "A Lightweight Disk based JSON Database with a MongoDB like API",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "author": "Arvind Ravulavaru",
     "bin": {
         "diskdb": "./bin/run"
