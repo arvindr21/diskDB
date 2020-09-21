@@ -1,1 +1,1 @@
-export { DiskDB } from './lib/diskdb';
+export { DiskDB } from './app/diskdb';
