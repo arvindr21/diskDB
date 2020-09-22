@@ -1,32 +1,50 @@
-import { each } from "async";
+import { ERR, LOG } from './helper';
+import { EXT_JSON, MESSAGES } from './global';
+
+import { each } from 'async';
+import { join } from 'path';
 
 export class DiskDB {
-  public collections: string[];
-  public path: string;
+  protected collections: string[];
+  protected path: string;
 
   constructor(path: string = __dirname, collections: string[] = []) {
+    if (collections.length === 0) {
+      ERR(MESSAGES.ERROR.COLL_MT);
+      throw new Error(MESSAGES.ERROR.COLL_MT);
+    }
     this.path = path;
     this.collections = collections;
-
-    this.loadCollections();
   }
 
-  private loadCollections(): void {
-    each(this.collections, (collection, callback) => {
+  public loadCollections(): Promise<any | string> {
+    return new Promise((resolve, reject) => {
+      each(
+        this.collections,
+        async (collectionName, callback) => {
+          LOG(MESSAGES.INFO.PRCG + collectionName);
 
-      // Perform operation on file here.
-      console.log('Processing collection ' + collection);
+          if (!collectionName.includes(EXT_JSON)) {
+            collectionName = `${collectionName}${EXT_JSON}`;
+          }
 
-      callback();
+          const collectionFile = join(this.path, collectionName);
+          const fsExists = await fileExists(collectionFile);
 
-    }, (err) => {
-      // if any of the file processing produced an error, err would equal that error
-      if (err) {
-        // One of the iterations produced an error.
-        // All processing will now stop.
-        throw new Error('Load Collection Failed: '+ err.message);
-      }
-    });
+
+          callback();
+        },
+        err => {
+          if (err) {
+            ERR(MESSAGES.ERROR.LOAD_FL + err.message);
+            reject(MESSAGES.ERROR.LOAD_FL);
+            throw new Error(MESSAGES.ERROR.LOAD_FL + err.message);
+          } else {
+            LOG(MESSAGES.INFO.COLL_LD_DONE);
+            resolve();
+          }
+        }
+      );
+    })
   }
-
 }

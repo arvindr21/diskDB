@@ -2,29 +2,58 @@
     "name": "diskdb",
     "version": "0.2.0",
     "description": "disk-db",
-    "license": "MIT",
     "repository": "https://github.com/arvindr21/diskdb",
+    "license": "MIT",
     "author": {
         "name": "Arvind Ravulavaru",
         "email": "arvind.ravulavaru@gmail.com",
         "url": "https://github.com/arvindr21/diskdb"
     },
+    "main": "build/index",
+    "types": "build/index",
     "files": [
         "build"
     ],
-    "main": "build/index",
-    "types": "build/index",
     "scripts": {
+        "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
+        "build": "DEBUG=diskdb tsc --pretty",
         "clean": "rimraf build && rimraf coverage",
+        "coverage": "jest --coverage",
         "format": "prettier --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
         "lint": "tslint --fix --force --format verbose \"src/**/*.ts\"",
         "prepublishOnly": "npm run build",
-        "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
-        "build": "tsc --pretty",
         "test": "jest",
-        "coverage": "jest --coverage",
         "watch": "npm run build -- --watch",
         "watch:test": "jest --watch"
+    },
+    "jest": {
+        "collectCoverage": true,
+        "coveragePathIgnorePatterns": [
+            ".history/",
+            "package.json",
+            "package-lock.json"
+        ],
+        "coverageReporters": [
+            "json",
+            "html",
+            "lcovonly",
+            "text"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 50,
+                "functions": 50,
+                "lines": 50,
+                "statements": 50
+            }
+        },
+        "notify": false,
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "testPathIgnorePatterns": [
+            ".history/"
+        ],
+        "verbose": false
     },
     "dependencies": {
         "async": "^3.2.0",
@@ -50,8 +79,5 @@
     },
     "engines": {
         "node": ">=10.0.0"
-    },
-    "jest": {
-        "preset": "ts-jest"
     }
 }

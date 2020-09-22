@@ -1,0 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ERR = exports.LOG = void 0;
+const debug = require("debug");
+exports.LOG = debug('diskdb');
+exports.ERR = debug('diskdb:error');
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaGVscGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vc3JjL2hlbHBlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSwrQkFBK0I7QUFFbEIsUUFBQSxHQUFHLEdBQUcsS0FBSyxDQUFDLFFBQVEsQ0FBQyxDQUFDO0FBQ3RCLFFBQUEsR0FBRyxHQUFHLEtBQUssQ0FBQyxjQUFjLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIGRlYnVnIGZyb20gJ2RlYnVnJztcblxuZXhwb3J0IGNvbnN0IExPRyA9IGRlYnVnKCdkaXNrZGInKTtcbmV4cG9ydCBjb25zdCBFUlIgPSBkZWJ1ZygnZGlza2RiOmVycm9yJyk7XG5cblxuLy8gZXhwb3J0IGZpbGVFeGlzdHNcbiJdfQ==

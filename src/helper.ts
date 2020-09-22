@@ -1,3 +1,7 @@
-import * as debug from "debug";
+import * as debug from 'debug';
 
-export const log = debug('diskdb');
+export const LOG = debug('diskdb');
+export const ERR = debug('diskdb:error');
+
+
+// export fileExists
