@@ -1,7 +1,11 @@
-import * as index from '../src/index';
+import { DiskDB } from '../build/index';
 
-describe('DiskDB: ', () => {
-  test('should be initialized ', () => {
-    expect(index.DiskDB).toBeTruthy();
-  });
+test('Should have DiskDB available', () => {
+  expect(DiskDB).toBeDefined();
+});
+
+test('Should be able to create an instance of DiskDB', () => {
+  const store = new DiskDB(__dirname, ['articles']);
+
+  expect(store).toBeInstanceOf(DiskDB);
 });
