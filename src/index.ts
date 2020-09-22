@@ -8,11 +8,23 @@ import { join } from 'path';
 
 // Collection == File.json
 // Document == File.Obj[0].json
-
+/**
+ * @description DiskDB Class
+ * @author Arvind Ravulavaru
+ * @date 2020-09-22
+ * @export
+ * @class DiskDB
+ */
 export class DiskDB {
   public options: IDBOptions;
   public store: TCollections = new Map() as TCollections;
-
+  /**
+   * Creates an instance of DiskDB.
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {IDBOptions} options
+   * @memberof DiskDB
+   */
   constructor(options: IDBOptions) {
     if (options.collections.length === 0) {
       LOG(MESSAGES.ERROR.COLL_MT);
@@ -31,7 +43,15 @@ export class DiskDB {
     }
     this.options = options;
   }
-
+  /**
+   * @description adds a document to a collection
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @param {*} doc
+   * @returns {boolean}
+   * @memberof DiskDB
+   */
   public addDocumentToCollection(collectionName: string, doc: any): boolean {
     const coll = this.findOneCollection(collectionName);
 
@@ -69,11 +89,25 @@ export class DiskDB {
       throw new Error(error);
     }
   }
-
+  /**
+   * @description returns all collections
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @returns {TCollections}
+   * @memberof DiskDB
+   */
   public findCollections(): TCollections {
     return this.store;
   }
-
+  /**
+   * @description Returns a document by document id in a collection
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @param {string} docId
+   * @returns {(IDocument | null | false)}
+   * @memberof DiskDB
+   */
   public findDocumentFromCollectionByID(
     collectionName: string,
     docId: string
@@ -101,7 +135,15 @@ export class DiskDB {
 
     return doc;
   }
-
+  /**
+   * @description returns a document by query [TODO]
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @param {string} docId
+   * @returns {(IDocument | null | false)}
+   * @memberof DiskDB
+   */
   public findDocumentsFromCollectionByQuery(
     collectionName: string,
     docId: string
@@ -129,11 +171,24 @@ export class DiskDB {
 
     return doc;
   }
-
+  /**
+   * @description returns one collection
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @returns {(ICollection | undefined)}
+   * @memberof DiskDB
+   */
   public findOneCollection(collectionName: string): ICollection | undefined {
     return this.store.get(collectionName);
   }
-
+  /**
+   * @description Syncs collections from/to disk
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @returns {(Promise<TCollections | string>)}
+   * @memberof DiskDB
+   */
   public loadCollections(): Promise<TCollections | string> {
     return new Promise((resolve, reject) => {
       each(
@@ -177,11 +232,26 @@ export class DiskDB {
       );
     });
   }
-
+  /**
+   * @description removes a collection and associated documents
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @returns {boolean}
+   * @memberof DiskDB
+   */
   public removeCollection(collectionName: string): boolean {
     return this.store.delete(collectionName);
   }
-
+  /**
+   * @description removes a document from a collection
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @param {string} docId
+   * @returns {boolean}
+   * @memberof DiskDB
+   */
   public removeDocumentFromCollection(
     collectionName: string,
     docId: string
