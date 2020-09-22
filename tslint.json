@@ -4,6 +4,7 @@
         "tslint-config-prettier"
     ],
     "rules": {
+        "object-literal-sort-keys": true,
         "class-name": true,
         "member-ordering": [
             true,
