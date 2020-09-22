@@ -1,50 +1,56 @@
-import * as debug from 'debug';
+import Debug from 'debug';
 
 import { ICollection, IDocument } from './interfaces';
 
 import { promises } from 'fs';
 import { MESSAGES } from './global';
 
-export const LOG = debug('diskdb');
-export const ERR = debug('diskdb:error');
+export const LOG = Debug('diskdb');
 
 // File Helpers
-export async function fileExists(file: string): Promise<boolean> {
+export async function exists(file: string): Promise<boolean> {
   try {
     await promises.access(file);
     return true;
   } catch (error) {
-    ERR.log(MESSAGES.ERROR.GEN + error);
+    LOG(MESSAGES.ERROR.GEN + error);
     return false;
   }
 }
 
-export async function writeToCollection(
-  file: string,
-  contents: string
-): Promise<boolean> {
+export async function write(file: string, contents: string): Promise<boolean> {
   try {
     await promises.writeFile(file, contents);
     return true;
   } catch (error) {
-    ERR.log(MESSAGES.ERROR.GEN + error);
+    LOG(MESSAGES.ERROR.GEN + error);
     return false;
   }
 }
 
-export async function readFromCollection(
+export async function read(
   file: string
 ): Promise<ICollection['documents'] | null> {
   try {
     const contents = await promises.readFile(file, 'utf8');
     return JSON.parse(contents);
   } catch (error) {
-    ERR.log(MESSAGES.ERROR.GEN + error);
+    LOG(MESSAGES.ERROR.GEN + error);
     return null;
   }
 }
 
-export function getMeta(): IDocument['meta'] {
+export async function remove(file: string): Promise<boolean | null> {
+  try {
+    await promises.unlink(file);
+    return true;
+  } catch (error) {
+    LOG(MESSAGES.ERROR.GEN + error);
+    return null;
+  }
+}
+
+export function genMeta(): IDocument['meta'] {
   return {
     timestamp: +new Date(),
     version: 0,

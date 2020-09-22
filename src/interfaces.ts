@@ -5,6 +5,8 @@ export interface ICollection {
 }
 export interface IDBOptions {
   collections: string[];
+  compress: boolean;
+  encrypt?: boolean;
   path: string;
 }
 

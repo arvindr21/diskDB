@@ -25,7 +25,12 @@
         ]
     },
     "ordered-imports": true,
-    "object-literal-sort-keys": {
-        "options": "match-declaration-order"
-    }
+    "object-literal-sort-keys": [
+        true,
+        "ignore-blank-lines",
+        "ignore-case",
+        "locale-compare",
+        "match-declaration-order",
+        "shorthand-first"
+    ]
 }

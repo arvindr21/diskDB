@@ -1,12 +1,5 @@
 import { EMPTY_ARRAY, EXT_JSON, MESSAGES } from './global';
-import {
-  ERR,
-  fileExists,
-  getMeta,
-  LOG,
-  readFromCollection,
-  writeToCollection,
-} from './helper';
+import { exists, genMeta, LOG, read, write } from './helper';
 import { ICollection, IDBOptions, IDocument, TCollections } from './interfaces';
 
 import { each } from 'async';
@@ -21,11 +14,20 @@ export class DiskDB {
   public store: TCollections = new Map() as TCollections;
 
   constructor(options: IDBOptions) {
-    options.path = options.path || __dirname;
-
     if (options.collections.length === 0) {
-      ERR.log(MESSAGES.ERROR.COLL_MT);
+      LOG(MESSAGES.ERROR.COLL_MT);
       throw new Error(MESSAGES.ERROR.COLL_MT);
+    }
+
+    options.path = options.path || __dirname;
+    options.compress = options.compress || true;
+    options.encrypt = options.encrypt || false;
+
+    LOG(MESSAGES.WARN.ENC_WRN);
+
+    if (options.encrypt) {
+      // tslint:disable-next-line: no-console
+      console.warn(MESSAGES.WARN.ENC_WRN);
     }
     this.options = options;
   }
@@ -34,7 +36,7 @@ export class DiskDB {
     const coll = this.findOneCollection(collectionName);
 
     if (!coll) {
-      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      LOG(MESSAGES.ERROR.COLL_NF + collectionName);
       return false;
     }
 
@@ -48,7 +50,7 @@ export class DiskDB {
           const dbDoc: IDocument = {
             _id: nanoid(),
             data: d,
-            meta: getMeta(),
+            meta: genMeta(),
           };
           data.push(dbDoc);
         });
@@ -57,7 +59,7 @@ export class DiskDB {
         data.push({
           _id: nanoid(),
           data: doc,
-          meta: getMeta(),
+          meta: genMeta(),
         });
       }
 
@@ -80,7 +82,7 @@ export class DiskDB {
     let doc: IDocument | any = {};
 
     if (!coll) {
-      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      LOG(MESSAGES.ERROR.COLL_NF + collectionName);
       return false;
     }
 
@@ -108,7 +110,7 @@ export class DiskDB {
     let doc: IDocument | any = {};
 
     if (!coll) {
-      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      LOG(MESSAGES.ERROR.COLL_NF + collectionName);
       return false;
     }
 
@@ -144,16 +146,12 @@ export class DiskDB {
           }
 
           const collectionFile = join(this.options.path, collectionName);
-          const fsExists: boolean = await fileExists(collectionFile);
+          const fsExists: boolean = await exists(collectionFile);
           let fileContents: ICollection['documents'] = JSON.parse(EMPTY_ARRAY);
           if (!fsExists) {
-            await writeToCollection(
-              collectionFile,
-              JSON.stringify(fileContents)
-            );
+            await write(collectionFile, JSON.stringify(fileContents));
           } else {
-            fileContents =
-              (await readFromCollection(collectionFile)) || fileContents;
+            fileContents = (await read(collectionFile)) || fileContents;
           }
 
           const coll: ICollection = {
@@ -168,7 +166,7 @@ export class DiskDB {
         },
         err => {
           if (err) {
-            ERR.log(MESSAGES.ERROR.LOAD_FL + err.message);
+            LOG(MESSAGES.ERROR.LOAD_FL + err.message);
             reject(MESSAGES.ERROR.LOAD_FL);
             throw new Error(MESSAGES.ERROR.LOAD_FL + err.message);
           } else {
@@ -191,7 +189,7 @@ export class DiskDB {
     const coll = this.findOneCollection(collectionName);
 
     if (!coll) {
-      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      LOG(MESSAGES.ERROR.COLL_NF + collectionName);
       return false;
     }
 
