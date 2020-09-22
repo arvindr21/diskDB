@@ -10,7 +10,7 @@ import {
 import { ICollection, IDBOptions, IDocument, TCollections } from './interfaces';
 
 import { each } from 'async';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
 import { join } from 'path';
 
 // Collection == File.json
@@ -32,49 +32,104 @@ export class DiskDB {
 
   public addDocumentToCollection(collectionName: string, doc: any): boolean {
     const coll = this.findOneCollection(collectionName);
-    let dbDoc: IDocument;
 
     if (!coll) {
       ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
       return false;
     }
 
-    let data = coll.documents as any[];
-    // bulk add
-    if (Array.isArray(doc)) {
-      // tslint:disable-next-line: no-shadowed-variable
-      doc.forEach((data: any) => {
+    try {
+      const data = coll.documents as any[];
+      // bulk add
+      if (Array.isArray(doc)) {
         // tslint:disable-next-line: no-shadowed-variable
-        const dbDoc: IDocument = {
-          data,
-          meta: getMeta()
-        }
-        data = dbDoc;
-      });
-      data = data.concat(doc);
-    } else {
-      // single document add
-      data.push({
-        data: doc,
-        meta: getMeta()
-      });
-    }
+        doc.forEach((d: any) => {
+          // tslint:disable-next-line: no-shadowed-variable
+          const dbDoc: IDocument = {
+            _id: nanoid(),
+            data: d,
+            meta: getMeta(),
+          };
+          data.push(dbDoc);
+        });
+      } else {
+        // single document add
+        data.push({
+          _id: nanoid(),
+          data: doc,
+          meta: getMeta(),
+        });
+      }
 
-    coll.documents = data;
-    return true;
+      coll.documents = data;
+      return true;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   public findCollections(): TCollections {
     return this.store;
   }
 
-  public findOneCollection(collectionName: string): ICollection | undefined {
-    return this.store.get(collectionName);
+  public findDocumentFromCollectionByID(
+    collectionName: string,
+    docId: string
+  ): IDocument | null | false {
+    const coll = this.findOneCollection(collectionName);
+    let doc: IDocument | any = {};
+
+    if (!coll) {
+      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      return false;
+    }
+
+    const docs = coll.documents;
+
+    if (docs.length === 0) {
+      return doc;
+    }
+
+    docs.forEach((docm: IDocument) => {
+      if (docm._id === docId) {
+        doc = docm;
+        return;
+      }
+    });
+
+    return doc;
   }
 
-  public getDocumentFromCollection(collectionName: string, docId: string) {
-    const coll = this.store.get(collectionName);
-    coll?.documents.
+  public findDocumentsFromCollectionByQuery(
+    collectionName: string,
+    docId: string
+  ): IDocument | null | false {
+    const coll = this.findOneCollection(collectionName);
+    let doc: IDocument | any = {};
+
+    if (!coll) {
+      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      return false;
+    }
+
+    const docs = coll.documents;
+
+    if (docs.length === 0) {
+      return doc;
+    }
+
+    docs.forEach((docm: IDocument) => {
+      if (docm._id === docId) {
+        doc = docm;
+        return;
+      }
+    });
+
+    return doc;
+  }
+
+  public findOneCollection(collectionName: string): ICollection | undefined {
+    return this.store.get(collectionName);
   }
 
   public loadCollections(): Promise<TCollections | string> {
@@ -90,15 +145,19 @@ export class DiskDB {
 
           const collectionFile = join(this.options.path, collectionName);
           const fsExists: boolean = await fileExists(collectionFile);
-          let fileContents: string | null = EMPTY_ARRAY;
+          let fileContents: ICollection['documents'] = JSON.parse(EMPTY_ARRAY);
           if (!fsExists) {
-            await writeToCollection(collectionFile, JSON.parse(fileContents));
+            await writeToCollection(
+              collectionFile,
+              JSON.stringify(fileContents)
+            );
           } else {
-            fileContents = await readFromCollection(collectionFile);
+            fileContents =
+              (await readFromCollection(collectionFile)) || fileContents;
           }
 
           const coll: ICollection = {
-            documents: fileContents,
+            documents: fileContents ? fileContents : [],
             name: collectionName.replace(EXT_JSON, ''),
             path: collectionFile,
           };
@@ -125,4 +184,22 @@ export class DiskDB {
     return this.store.delete(collectionName);
   }
 
+  public removeDocumentFromCollection(
+    collectionName: string,
+    docId: string
+  ): boolean {
+    const coll = this.findOneCollection(collectionName);
+
+    if (!coll) {
+      ERR.log(MESSAGES.ERROR.COLL_NF + collectionName);
+      return false;
+    }
+
+    try {
+      coll.documents = coll.documents.filter((d: IDocument) => d._id !== docId);
+      return true;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }

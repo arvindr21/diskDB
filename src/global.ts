@@ -3,7 +3,7 @@ export const MESSAGES = {
     GEN: 'Something went wrong! ',
     COLL_MT: 'Collection cannot be empty',
     LOAD_FL: 'Load Collection Failed: ',
-    COLL_NF: 'No Collection found with name: '
+    COLL_NF: 'No Collection found with name: ',
   },
   INFO: {
     PRCG: 'Processing collection ',

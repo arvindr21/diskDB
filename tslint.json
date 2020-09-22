@@ -23,5 +23,9 @@
                 ]
             }
         ]
+    },
+    "ordered-imports": true,
+    "object-literal-sort-keys": {
+        "options": "match-declaration-order"
     }
 }

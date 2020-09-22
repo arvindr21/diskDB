@@ -8,15 +8,13 @@ export interface IDBOptions {
   path: string;
 }
 
-export interface IDocument{
-  data: any,
+export interface IDocument {
+  _id: string;
+  data: any;
   meta: {
-    _id: string;
-    timestamp: number
-  }
+    timestamp: number;
+    version: number;
+  };
 }
 
 export type TCollections = Map<string, ICollection>;
-
-
-

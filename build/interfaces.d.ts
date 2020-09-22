@@ -8,10 +8,11 @@ export interface IDBOptions {
     path: string;
 }
 export interface IDocument {
+    _id: string;
     data: any;
     meta: {
-        _id: string;
         timestamp: number;
+        version: number;
     };
 }
 export declare type TCollections = Map<string, ICollection>;

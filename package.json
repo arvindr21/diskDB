@@ -19,7 +19,7 @@
         "build": "DEBUG=diskdb tsc --pretty",
         "clean": "rimraf build && rimraf coverage",
         "coverage": "jest --coverage",
-        "format": "prettier --fix --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
+        "format": "prettier --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
         "lint": "tslint --fix --force --format verbose \"src/**/*.ts\"",
         "prepublishOnly": "npm run build",
         "test": "jest",

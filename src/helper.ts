@@ -1,9 +1,9 @@
 import * as debug from 'debug';
 
-import { IDocument } from './interfaces';
-import { MESSAGES } from './global';
-import { nanoid } from 'nanoid';
+import { ICollection, IDocument } from './interfaces';
+
 import { promises } from 'fs';
+import { MESSAGES } from './global';
 
 export const LOG = debug('diskdb');
 export const ERR = debug('diskdb:error');
@@ -32,19 +32,21 @@ export async function writeToCollection(
   }
 }
 
-export async function readFromCollection(file: string): Promise<string | null> {
+export async function readFromCollection(
+  file: string
+): Promise<ICollection['documents'] | null> {
   try {
     const contents = await promises.readFile(file, 'utf8');
-    return contents;
+    return JSON.parse(contents);
   } catch (error) {
     ERR.log(MESSAGES.ERROR.GEN + error);
     return null;
   }
 }
 
-export function getMeta(): IDocument["meta"]{
+export function getMeta(): IDocument['meta'] {
   return {
-    _id: nanoid(),
-    timestamp: +new Date
-  }
+    timestamp: +new Date(),
+    version: 0,
+  };
 }
