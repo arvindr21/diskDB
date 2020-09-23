@@ -23,7 +23,7 @@ export class Compress {
   private _decoder: any;
   private _encoder: any;
   /**
-   * @description De-compress any data that has been already encoded
+   * @description De-compress any data that has been already been compressed
    * @author Arvind Ravulavaru
    * @date 2020-09-23
    * @param {*} data
