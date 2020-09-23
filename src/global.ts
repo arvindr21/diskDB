@@ -16,6 +16,5 @@ export const MESSAGES = {
 };
 
 export const EXT_JSON = '.json';
-
 export const EMPTY_ARRAY = '[]';
 export const EMPTY_OBJECT = '{}';

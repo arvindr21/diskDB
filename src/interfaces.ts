@@ -1,7 +1,11 @@
 export interface ICollection {
   documents: IDocument[];
-  name: string;
-  path: string;
+  meta: {
+    compress: boolean;
+    encrypt: boolean;
+    name: string;
+    path: string;
+  };
 }
 export interface IDBOptions {
   collections: string[];

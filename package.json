@@ -19,40 +19,29 @@
         "build": "DEBUG=diskdb tsc --pretty",
         "clean": "rimraf build && rimraf coverage",
         "coverage": "jest --coverage",
+        "docs": "typedoc",
         "format": "prettier --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
         "lint": "tslint --fix --force --format verbose \"src/**/*.ts\"",
         "prepublishOnly": "npm run build",
         "test": "jest",
         "watch": "npm run build -- --watch",
-        "watch:test": "jest --watch",
-        "docs": "typedoc"
+        "watch:test": "jest --watch"
     },
     "jest": {
         "collectCoverage": true,
+        "collectCoverageFrom": [
+            "**/src/**"
+        ],
         "coveragePathIgnorePatterns": [
             ".history/",
             "package.json",
             "package-lock.json",
             "tslint.json"
         ],
-        "collectCoverageFrom": [
-            "**/src/**"
-        ],
         "coverageReporters": [
             "html",
             "text",
             "lcov"
-        ],
-        "reporters": [
-            [
-                "jest-stare",
-                {
-                    "reportTitle": "DiskDB Unit Test Report",
-                    "resultDir": "./coverage",
-                    "coverageLink": "lcov-report/index.html",
-                    "hideTodos": true
-                }
-            ]
         ],
         "coverageThreshold": {
             "global": {
@@ -64,6 +53,17 @@
         },
         "notify": false,
         "preset": "ts-jest",
+        "reporters": [
+            [
+                "jest-stare",
+                {
+                    "reportTitle": "DiskDB Unit Test Report",
+                    "resultDir": "./coverage",
+                    "coverageLink": "lcov-report/index.html",
+                    "hideTodos": true
+                }
+            ]
+        ],
         "testEnvironment": "node",
         "testPathIgnorePatterns": [
             ".history/"
@@ -75,10 +75,12 @@
         "debug": "^4.2.0",
         "graceful-fs": "^4.2.4",
         "jest-stare": "^2.2.0",
+        "msgpack5": "^4.2.1",
         "nanoid": "^3.1.12"
     },
     "devDependencies": {
         "@types/async": "^3.2.3",
+        "@types/msgpack5": "^3.4.1",
         "@types/debug": "^4.1.5",
         "@types/graceful-fs": "^4.1.3",
         "@types/jest": "^26.0.14",

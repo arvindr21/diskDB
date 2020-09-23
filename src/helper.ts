@@ -1,11 +1,14 @@
 import Debug from 'debug';
 
-import { ICollection, IDocument } from './interfaces';
+import { ICollection, IDBOptions, IDocument } from './interfaces';
 
 import { promises } from 'fs';
 import { MESSAGES } from './global';
 
+import { Compress } from './compress';
+
 export const LOG = Debug('diskdb');
+const compress = new Compress();
 
 /**
  * @description check if file exists
@@ -33,9 +36,16 @@ export async function exists(file: string): Promise<boolean> {
  * @param {string} contents
  * @returns {Promise<boolean>}
  */
-export async function write(file: string, contents: string): Promise<boolean> {
+export async function write(
+  file: string,
+  contents: string,
+  options: IDBOptions
+): Promise<boolean> {
   try {
-    await promises.writeFile(file, contents);
+    await promises.writeFile(
+      file,
+      options.compress ? compress.encode(contents) : contents
+    );
     return true;
   } catch (error) {
     LOG(MESSAGES.ERROR.GEN + error);
@@ -51,10 +61,13 @@ export async function write(file: string, contents: string): Promise<boolean> {
  * @returns {(Promise<ICollection['documents'] | null>)}
  */
 export async function read(
-  file: string
-): Promise<ICollection['documents'] | null> {
+  file: string,
+  options: IDBOptions
+): Promise<ICollection | null> {
   try {
-    const contents = await promises.readFile(file, 'utf8');
+    const contents = options.compress
+      ? compress.decode(await promises.readFile(file, 'utf-8'))
+      : await promises.readFile(file, 'utf-8');
     return JSON.parse(contents);
   } catch (error) {
     LOG(MESSAGES.ERROR.GEN + error);

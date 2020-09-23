@@ -31,9 +31,9 @@ export class DiskDB {
       throw new Error(MESSAGES.ERROR.COLL_MT);
     }
 
-    options.path = options.path || __dirname;
-    options.compress = options.compress || true;
-    options.encrypt = options.encrypt || false;
+    options.path = options.path ?? __dirname;
+    options.compress = options.compress ?? true;
+    options.encrypt = options.encrypt ?? false;
 
     LOG(MESSAGES.WARN.ENC_WRN);
 
@@ -135,42 +135,7 @@ export class DiskDB {
 
     return doc;
   }
-  /**
-   * @description returns a document by query [TODO]
-   * @author Arvind Ravulavaru
-   * @date 2020-09-22
-   * @param {string} collectionName
-   * @param {string} docId
-   * @returns {(IDocument | null | false)}
-   * @memberof DiskDB
-   */
-  public findDocumentsFromCollectionByQuery(
-    collectionName: string,
-    docId: string
-  ): IDocument | null | false {
-    const coll = this.findOneCollection(collectionName);
-    let doc: IDocument | any = {};
 
-    if (!coll) {
-      LOG(MESSAGES.ERROR.COLL_NF + collectionName);
-      return false;
-    }
-
-    const docs = coll.documents;
-
-    if (docs.length === 0) {
-      return doc;
-    }
-
-    docs.forEach((docm: IDocument) => {
-      if (docm._id === docId) {
-        doc = docm;
-        return;
-      }
-    });
-
-    return doc;
-  }
   /**
    * @description returns one collection
    * @author Arvind Ravulavaru
@@ -201,25 +166,34 @@ export class DiskDB {
           }
 
           const collectionFile = join(this.options.path, collectionName);
-          const fsExists: boolean = await exists(collectionFile);
-          let fileContents: ICollection['documents'] = JSON.parse(EMPTY_ARRAY);
-          if (!fsExists) {
-            await write(collectionFile, JSON.stringify(fileContents));
-          } else {
-            fileContents = (await read(collectionFile)) || fileContents;
-          }
-
+          const fileContents: ICollection['documents'] = JSON.parse(
+            EMPTY_ARRAY
+          );
+          const dbDoc = await read(collectionFile, this.options);
           const coll: ICollection = {
-            documents: fileContents ? fileContents : [],
-            name: collectionName.replace(EXT_JSON, ''),
-            path: collectionFile,
+            documents: dbDoc?.documents ?? fileContents,
+            meta: {
+              compress: dbDoc?.meta.compress || this.options.compress,
+              encrypt: dbDoc?.meta.encrypt ?? this.options.encrypt ?? false,
+              name: dbDoc?.meta.name ?? collectionName.replace(EXT_JSON, ''),
+              path: dbDoc?.meta.path ?? collectionFile,
+            },
           };
 
-          this.store.set(coll.name, coll);
+          const fsExists: boolean = await exists(collectionFile);
+          if (!fsExists) {
+            await write(
+              collectionFile,
+              JSON.stringify(fileContents),
+              this.options
+            );
+          }
+
+          this.store.set(coll.meta.name, coll);
 
           callback();
         },
-        (err) => {
+        err => {
           if (err) {
             LOG(MESSAGES.ERROR.LOAD_FL + err.message);
             reject(MESSAGES.ERROR.LOAD_FL);
@@ -232,6 +206,7 @@ export class DiskDB {
       );
     });
   }
+
   /**
    * @description removes a collection and associated documents
    * @author Arvind Ravulavaru
