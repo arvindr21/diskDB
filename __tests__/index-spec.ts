@@ -1,4 +1,4 @@
-import { DiskDB } from '../build/index';
+import { DiskDB } from '../src/index';
 describe('DISKDB: ', () => {
   beforeEach(() => {
     jest.resetModules();

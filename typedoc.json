@@ -1,0 +1,12 @@
+{
+    "inputFiles": ["./src"],
+    "mode": "modules",
+    "out": "doc",
+    "name": "DiskDB Docs",
+    "includeVersion": true,
+    "readme": true,
+    "gitRevision": true,
+    "gitRemote": true,
+    "hideGenerator": false
+
+}

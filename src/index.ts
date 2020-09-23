@@ -219,7 +219,7 @@ export class DiskDB {
 
           callback();
         },
-        err => {
+        (err) => {
           if (err) {
             LOG(MESSAGES.ERROR.LOAD_FL + err.message);
             reject(MESSAGES.ERROR.LOAD_FL);
