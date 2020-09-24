@@ -1,5 +1,5 @@
-// tslint:disable: variable-name
-import { Decoder, Encoder } from 'msgpack5';
+import * as LZC from 'lzutf8';
+
 /**
  * @description Compression class
  * @author Arvind Ravulavaru
@@ -8,31 +8,6 @@ import { Decoder, Encoder } from 'msgpack5';
  * @class Compress
  */
 export class Compress {
-
-  /**
-   * Creates an instance of Compress.
-   * @author Arvind Ravulavaru
-   * @date 2020-09-23
-   * @memberof Compress
-   */
-  constructor() {
-    this._decoder = new Decoder({});
-    this._encoder = new Encoder({});
-  }
-
-  private _decoder: any;
-  private _encoder: any;
-  /**
-   * @description De-compress any data that has been already been compressed
-   * @author Arvind Ravulavaru
-   * @date 2020-09-23
-   * @param {*} data
-   * @returns
-   * @memberof Compress
-   */
-  public decode(data: any) {
-    return this._decoder(data);
-  }
   /**
    * @description Compress any data
    * @author Arvind Ravulavaru
@@ -41,7 +16,49 @@ export class Compress {
    * @returns
    * @memberof Compress
    */
-  public encode(data: any) {
-    return this._encoder(data);
+  public async compress(data: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      LZC.compressAsync(
+        data,
+        {
+          inputEncoding: 'String',
+          outputEncoding: 'BinaryString',
+        },
+        (compressed, error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(compressed);
+          }
+        }
+      );
+    });
+  }
+
+  /**
+   * @description De-compress any data that has been already been compressed
+   * @author Arvind Ravulavaru
+   * @date 2020-09-23
+   * @param {*} data
+   * @returns
+   * @memberof Compress
+   */
+  public async decompress(data: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      LZC.decompressAsync(
+        data,
+        {
+          inputEncoding: 'BinaryString',
+          outputEncoding: 'String',
+        },
+        (compressed, error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(compressed);
+          }
+        }
+      );
+    });
   }
 }

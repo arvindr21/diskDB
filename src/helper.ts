@@ -1,8 +1,9 @@
 import Debug from 'debug';
-
+import { manual as mkdirp } from 'mkdirp';
 import { ICollection, IDBOptions, IDocument } from './interfaces';
 
 import { promises } from 'fs';
+import { dirname } from 'path';
 import { MESSAGES } from './global';
 
 import { Compress } from './compress';
@@ -42,9 +43,15 @@ export async function write(
   options: IDBOptions
 ): Promise<boolean> {
   try {
+    // make sure the folder exists before creating the file
+    const folder = dirname(file);
+    // create missing dirs
+    await mkdirp(folder);
     await promises.writeFile(
       file,
-      options.compress ? compress.encode(contents) : contents
+      options.compress
+        ? (await compress.compress(contents)).toString()
+        : contents
     );
     return true;
   } catch (error) {
@@ -66,7 +73,7 @@ export async function read(
 ): Promise<ICollection | null> {
   try {
     const contents = options.compress
-      ? compress.decode(await promises.readFile(file, 'utf-8'))
+      ? compress.decompress(await promises.readFile(file, 'utf-8')).toString()
       : await promises.readFile(file, 'utf-8');
     return JSON.parse(contents);
   } catch (error) {

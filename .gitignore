@@ -9,3 +9,4 @@ lib_test
 .history
 build
 doc
+examples/mydb

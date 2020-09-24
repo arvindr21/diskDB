@@ -25,7 +25,8 @@
         "prepublishOnly": "npm run build",
         "test": "jest",
         "watch": "npm run build -- --watch",
-        "watch:test": "jest --watch"
+        "watch:test": "jest --watch",
+        "examples": "ts-node ./examples"
     },
     "jest": {
         "collectCoverage": true,
@@ -75,15 +76,17 @@
         "debug": "^4.2.0",
         "graceful-fs": "^4.2.4",
         "jest-stare": "^2.2.0",
-        "msgpack5": "^4.2.1",
+        "lzutf8": "^0.5.6",
+        "mkdirp": "^1.0.4",
         "nanoid": "^3.1.12"
     },
     "devDependencies": {
         "@types/async": "^3.2.3",
-        "@types/msgpack5": "^3.4.1",
         "@types/debug": "^4.1.5",
         "@types/graceful-fs": "^4.1.3",
         "@types/jest": "^26.0.14",
+        "@types/mkdirp": "^1.0.1",
+        "@types/msgpack-lite": "^0.1.7",
         "@types/node": "^14.11.2",
         "coveralls": "^3.0.2",
         "handlebars": "^4.5.0",

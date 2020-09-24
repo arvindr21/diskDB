@@ -4,7 +4,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
-      "esnext"
+      "esnext",
+      "WebWorker"
     ],
     "target": "es2015",
     "outDir": "./build",
