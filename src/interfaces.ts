@@ -1,12 +1,15 @@
-export interface ICollection {
-  documents: IDocument[];
-  meta: {
-    compress: boolean;
-    encrypt: boolean;
-    name: string;
-    path: string;
-  };
+export abstract class ICollection {
+  documents!: IDocument[];
+  meta!: IMeta;
 }
+
+interface IMeta {
+  compress: boolean;
+  encrypt: boolean;
+  name: string;
+  path: string;
+}
+
 export interface IDBOptions {
   collections: string[];
   compress: boolean;

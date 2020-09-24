@@ -52,7 +52,10 @@ export class DiskDB {
    * @returns {boolean}
    * @memberof DiskDB
    */
-  public addDocumentToCollection(collectionName: string, doc: any): boolean {
+  public async addDocumentToCollection(
+    collectionName: string,
+    doc: any
+  ): Promise<boolean> {
     const coll = this.findOneCollection(collectionName);
 
     if (!coll) {
@@ -84,10 +87,23 @@ export class DiskDB {
       }
 
       coll.documents = data;
+      await write(coll.meta.path, JSON.stringify(coll), coll.meta.compress);
       return true;
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  /**
+   * @description removes a collection and associated documents
+   * @author Arvind Ravulavaru
+   * @date 2020-09-22
+   * @param {string} collectionName
+   * @returns {boolean}
+   * @memberof DiskDB
+   */
+  public delete(collectionName: string): boolean {
+    return this.store.delete(collectionName);
   }
   /**
    * @description returns all collections
@@ -183,7 +199,11 @@ export class DiskDB {
 
           const fsExists: boolean = await exists(collectionFile);
           if (!fsExists) {
-            await write(collectionFile, JSON.stringify(coll), this.options);
+            await write(
+              collectionFile,
+              JSON.stringify(coll),
+              coll.meta.compress
+            );
           }
 
           this.store.set(coll.meta.name.replace(EXT_DB, ''), coll);
@@ -203,17 +223,6 @@ export class DiskDB {
     });
   }
 
-  /**
-   * @description removes a collection and associated documents
-   * @author Arvind Ravulavaru
-   * @date 2020-09-22
-   * @param {string} collectionName
-   * @returns {boolean}
-   * @memberof DiskDB
-   */
-  public removeCollection(collectionName: string): boolean {
-    return this.store.delete(collectionName);
-  }
   /**
    * @description removes a document from a collection
    * @author Arvind Ravulavaru

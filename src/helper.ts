@@ -40,7 +40,7 @@ export async function exists(file: string): Promise<boolean> {
 export async function write(
   file: string,
   contents: string,
-  options: IDBOptions
+  shouldCompress: boolean
 ): Promise<boolean> {
   try {
     // make sure the folder exists before creating the file
@@ -49,9 +49,7 @@ export async function write(
     await mkdirp(folder);
     await promises.writeFile(
       file,
-      options.compress
-        ? (await compress.compress(contents)).toString()
-        : contents
+      shouldCompress ? (await compress.compress(contents)).toString() : contents
     );
     return true;
   } catch (error) {
