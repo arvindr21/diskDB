@@ -9,7 +9,19 @@ const db = new DiskDB({
 });
 
 (async() => {
-    const { store } = await db.loadCollections();
-    // tslint:disable-next-line: no-console
-    console.log(store.get(coll));
+    const DB = await db.loadCollections();
+    // tslint:disable: no-console
+    console.log(DB.store.get(coll));
+
+    DB.addDocumentToCollection(coll, {
+      "author": "author 1",
+      "isbn": "93763782929992",
+      "name": "book 1"
+    });
+
+    console.log(DB.store.get(coll));
+    console.log(DB.store.get(coll)?.documents);
+    console.log('EXISTS >>>', DB.store.get(coll)?.documents.filter((d) => d.data.author === 'author 1'));
+    console.log('DOES NOT EXISTS >>>',DB.store.get(coll)?.documents.filter((d) => d.data.author === 'Arvind'));
+
 })();
