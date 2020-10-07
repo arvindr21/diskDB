@@ -5,7 +5,6 @@ export abstract class ICollection {
 
 interface IMeta {
   compress: boolean;
-  encrypt: boolean;
   name: string;
   path: string;
 }
@@ -13,7 +12,6 @@ interface IMeta {
 export interface IDBOptions {
   collections: string[];
   compress: boolean;
-  encrypt?: boolean;
   path: string;
 }
 

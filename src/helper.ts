@@ -4,7 +4,7 @@ import { ICollection, IDBOptions, IDocument } from './interfaces';
 
 import { promises } from 'fs';
 import { dirname } from 'path';
-import { MESSAGES } from './global';
+import { EXT_DB, EXT_JSON, MESSAGES } from './global';
 
 import { Compress } from './compress';
 
@@ -70,12 +70,13 @@ export async function read(
   options: IDBOptions
 ): Promise<ICollection | null> {
   try {
-    const contents = options.compress
-      ? compress.decompress(await promises.readFile(file, 'utf-8')).toString()
-      : await promises.readFile(file, 'utf-8');
+    const contents = options.compress ? (await compress.decompress(await promises.readFile(file, 'utf-8'))).toString() : await promises.readFile(file, 'utf-8');
     return JSON.parse(contents);
   } catch (error) {
-    LOG(MESSAGES.ERROR.GEN + error);
+    if(error.name==MESSAGES.ERROR.SYN_ERR){
+      console.log(MESSAGES.ERROR.PARSING_ERROR)
+      process.exit(1);
+    }
     return null;
   }
 }
@@ -109,4 +110,21 @@ export function genMeta(): IDocument['meta'] {
     timestamp: +new Date(),
     version: 0,
   };
+}
+/**
+ * @description Returns files in a directory
+ * @author Arvind Ravulavaru
+ * @date 2020-10-5
+ * @export
+ * @returns {Promise<String[]>}
+ */
+export async function readDirectory(path: string) {
+  let files = await promises.readdir(path);
+  let collectionNames:string[]=[];
+  if(files.length > 0){
+    for (let i in files){
+      collectionNames.push(files[i].replace(EXT_DB||EXT_JSON,''));
+    }
+  }
+ return collectionNames;
 }

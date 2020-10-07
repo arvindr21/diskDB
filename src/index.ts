@@ -1,5 +1,5 @@
 import { EMPTY_ARRAY, EXT_JSON, MESSAGES, EXT_DB } from './global';
-import { exists, genMeta, read, write } from './helper';
+import { exists, genMeta, read, write, remove, readDirectory } from './helper';
 import { ICollection, IDBOptions, IDocument, TCollections } from './interfaces';
 
 import { each } from 'async';
@@ -33,14 +33,7 @@ export class DiskDB {
 
     options.path = resolvePath(options.path) ?? __dirname;
     options.compress = options.compress ?? true;
-    options.encrypt = options.encrypt ?? false;
-
-    // LOG(MESSAGES.WARN.ENC_WRN);
-
-    if (options.encrypt) {
-      // tslint:disable-next-line: no-console
-      console.warn(MESSAGES.WARN.ENC_WRN);
-    }
+    console.log(MESSAGES.WARN.COMP_WRN);
     this.options = options;
   }
   /**
@@ -103,17 +96,19 @@ export class DiskDB {
    * @memberof DiskDB
    */
   public delete(collectionName: string): boolean {
-    return this.store.delete(collectionName);
+    let collectionFilePath = join(this.options.path, collectionName+EXT_DB); 
+    console.log(collectionFilePath) //for unlinking collection .db file
+    return  remove(collectionFilePath) && this.store.delete(collectionName);
   }
   /**
-   * @description returns all collections
+   * @description returns names of all collections
    * @author Arvind Ravulavaru
    * @date 2020-09-22
-   * @returns {TCollections}
+   * @return{Promise<String[]>
    * @memberof DiskDB
-   */
-  public findCollections(): TCollections {
-    return this.store;
+  **/
+  public findCollections():Promise<String[]> {
+    return readDirectory(this.options.path);
   }
   /**
    * @description Returns a document by document id in a collection
@@ -190,8 +185,7 @@ export class DiskDB {
           const coll: ICollection = {
             documents: dbDoc?.documents ?? fileContents,
             meta: {
-              compress: dbDoc?.meta.compress || this.options.compress,
-              encrypt: dbDoc?.meta.encrypt ?? this.options.encrypt ?? false,
+              compress: dbDoc?.meta.compress || this.options.compress, 
               name: dbDoc?.meta.name ?? collectionName.replace(EXT_JSON, ''),
               path: dbDoc?.meta.path ?? collectionFile,
             },
@@ -232,10 +226,10 @@ export class DiskDB {
    * @returns {boolean}
    * @memberof DiskDB
    */
-  public removeDocumentFromCollection(
+  public async removeDocumentFromCollection(
     collectionName: string,
     docId: string
-  ): boolean {
+  ) {
     const coll = this.findOneCollection(collectionName);
 
     if (!coll) {
@@ -244,7 +238,17 @@ export class DiskDB {
     }
 
     try {
+       const dbDoc = await read(coll.meta.path, this.options);
+          const collection: ICollection = {
+            documents: coll.documents.filter((d: IDocument) => d._id !== docId),
+            meta: {
+              compress: dbDoc?.meta.compress || this.options.compress, 
+              name: dbDoc?.meta.name ?? collectionName.replace(EXT_JSON, ''),
+              path: dbDoc?.meta.path ?? coll.meta.path
+            },
+          };
       coll.documents = coll.documents.filter((d: IDocument) => d._id !== docId);
+      await write(coll.meta.path, JSON.stringify(collection), coll.meta.compress);
       return true;
     } catch (error) {
       throw new Error(error);
