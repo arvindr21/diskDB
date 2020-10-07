@@ -1,47 +1,46 @@
 import { DiskDB } from "../build";
+import {IDBOptions} from '../build/interfaces'
 
-const coll = (+new Date).toString();
-const db = new DiskDB({
-    collections: [coll],
-    compress: false,
-    encrypt: false,
-    path: __dirname + '/mydb',
-});
+const coll = (new Date().getDate()+1).toString();
+
+let options: IDBOptions ={
+  collections: [coll],
+  compress: true,
+  path: __dirname + '/mydb/test',
+};
+const db = new DiskDB(options);
 
 (async() => {
-    const DB = await db.loadCollections();
-    // tslint:disable: no-console
-    // console.log(DB.store.get(coll));
+  //adding doc to collection
+  const DB = await db.loadCollections();
+   await DB.addDocumentToCollection(coll, [{
+    "author": "author 10",
+    "isbn": "1010",
+    "name": "book 10"
+  }, {
+    "author": "author 9",
+    "isbn": "999",
+    "name": "book 9"
+  }]);
 
+  console.log(DB.store.get(coll));
+  console.log(DB.store.get(coll)?.documents);
+  console.log(DB.store.get(coll)?.documents.length);
 
+  //find current collection
+  console.log('Names of all the collections in DB',await DB.findCollections());
 
-    // const resp = await DB.addDocumentToCollection(coll, {
-    //   "author": "author 1",
-    //   "isbn": "93763782929992",
-    //   "name": "book 1"
-    // });
+   //finding  document by ID from given collection
+  console.log('Find doc with ID',DB.findDocumentFromCollectionByID(coll,'lCQfBmtaBaF9la0nDtzvp'));
 
-    // console.log(resp, coll);
+  // //find collection by ID
+  console.log('Find collection',DB.findOneCollection(coll))
 
-    // console.log(DB.store.get(coll));
-    // console.log(DB.store.get(coll)?.documents);
-    // console.log('EXISTS >>>', DB.store.get(coll)?.documents.filter((d) => d.data.author === 'author 1'));
-    // console.log('DOES NOT EXISTS >>>',DB.store.get(coll)?.documents.filter((d) => d.data.author === 'Arvind'));
+  // // removing single document from collection
+  DB.removeDocumentFromCollection(coll,'CytkyhG5rC_pSOSuY9ICH')
+  console.log('checking if the doc was deleted from collection',DB.findOneCollection(coll))
+  console.log('documents after deleting ' ,DB.store.get(coll)?.documents); 
 
-    await DB.addDocumentToCollection(coll, [{
-      "author": "author 3",
-      "isbn": "333333333333",
-      "name": "book 3"
-    }, {
-      "author": "author 2",
-      "isbn": "999999999",
-      "name": "book 2"
-    }]);
-
-    // console.log(DB.store.get(coll));
-    // console.log(DB.store.get(coll)?.documents);
-    // console.log('EXISTS >>>', DB.store.get(coll)?.documents.filter((d) => d.data.author === 'author 3'));
-    // console.log('DOES NOT EXISTS >>>',DB.store.get(coll)?.documents.filter((d) => d.data.author === 'Arvind'));
-
-
+  // // Testing delete
+  //DB.delete(coll);
 })();
