@@ -185,7 +185,6 @@ export class DiskDB {
           const coll: ICollection = {
             documents: dbDoc?.documents ?? fileContents,
             meta: {
-              //compress: dbDoc?.meta.compress || false,  //false for testing purpose
               compress: dbDoc?.meta.compress || this.options.compress, 
               name: dbDoc?.meta.name ?? collectionName.replace(EXT_JSON, ''),
               path: dbDoc?.meta.path ?? collectionFile,
